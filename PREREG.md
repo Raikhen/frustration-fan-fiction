@@ -37,15 +37,15 @@ H1a is the cleanest test (no gaslighting confound). H1b is included to triangula
 
 Prefix instances drawn from `~/gemma-frustration/data/prefixes/all_prefixes.jsonl` (already scored by Claude Sonnet 4.6 on the paper's 0–10 frustration rubric). Up to 3 prefix instances per condition.
 
-**Prompts (20).** `data/prompts.jsonl`. Stratified by baseline darkness:
+**Prompts (40).** `data/prompts.jsonl`. All are alternate-universe premises (no canon-extension prompts, no crossovers, no role-swaps), stratified by what the AU premise suggests:
 
-- 8 dark-stratum (war, tragedy, death-anniversary)
-- 7 neutral-stratum (mystery, adventure, action)
-- 5 light-stratum (romance, slice-of-life, comedy)
+- 16 dark-stratum: catastrophe, villain-wins, or character-absent AUs
+- 14 neutral-stratum: mundane or everyday counterfactuals with no inherent tonal push
+- 10 light-stratum: cozy, domestic, or everyday-positive AUs
 
-Each is a *premise*, not a *plot* — the model picks what happens, leaving room for tone to vary by prefix. Each prompt asks for "a short … fanfic scene".
+Each is a *premise*, not a *plot* — the AU frames the world, but POV, time, place, activity, and tone are all chosen by the model. Each prompt asks for "a short … fanfic scene".
 
-**Generations.** For each (prompt × condition × prefix instance), 10 independent runs at temperature 1.0 (no `seed` parameter — provider support is unreliable; variance comes from sampling). With ~3 prefix instances per condition, 6 conditions, 20 prompts, that is 20 × (1 + 5 × 3) × 10 = 3 200 generations.
+**Generations.** For each (prompt × condition × prefix instance), 10 independent runs at temperature 1.0 (no `seed` parameter — provider support is unreliable; variance comes from sampling). With ~3 prefix instances per condition, 6 conditions, 40 prompts, that is 40 × (1 + 5 × 3) × 10 = 6 400 generations.
 
 Variance components captured: prompt (between-prompt), condition (between-condition, the treatment), prefix-within-condition (between-prefix), sampling at T=1 (within-cell).
 
@@ -73,7 +73,7 @@ All analyses operate on per-(prompt, condition, prefix, run) cells.
 
 For each prompt, average `overall_darkness` over its prefix instances and seeds within a condition. Then within each prompt:
 
-1. **H1a:** delta = mean(`failed-possible-high`) − mean(`failed-possible-low`). Wilcoxon signed-rank test across the 20 prompts, alternative = greater.
+1. **H1a:** delta = mean(`failed-possible-high`) − mean(`failed-possible-low`). Wilcoxon signed-rank test across the 40 prompts, alternative = greater.
 2. **H1b:** delta = mean(`failed-impossible-high`) − mean(`failed-impossible-low`). Same test.
 
 Effect size: Cohen's d on the per-prompt deltas. We will not Bonferroni-correct because H1a and H1b test the *same* hypothesis on two inductions; we will report both p-values uncorrected and conclude "supported" if both are < 0.05, "partially supported" if one is, "not supported" if neither is.
@@ -107,4 +107,4 @@ Either result will be reported as "no support for spillover into fanfic darkness
 
 ## Cost estimate
 
-Approximately **$10–12** on OpenRouter (~3 200 Gemma-3-27B generations at temperature 1.0, plus ~3 200 Claude Haiku 4.5 judge calls at k=1).
+Approximately **$20–24** on OpenRouter (~6 400 Gemma-3-27B generations at temperature 1.0, plus ~6 400 Claude Haiku 4.5 judge calls at k=1).
