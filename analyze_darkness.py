@@ -184,6 +184,66 @@ def report_mixed_model(df_avg):
         console.print(f"[red]Mixed model failed: {e}[/red]")
 
 
+def report_refusals(df_raw):
+    """Per-condition refusal and generation-failure rates.
+
+    Operates on raw judgments (one row per judge pass). A response counts as
+    a refusal if ANY of its judge passes flagged is_refusal. A response counts
+    as a generation failure if ANY pass has generation_failed.
+    """
+    if "is_refusal" not in df_raw.columns and "generation_failed" not in df_raw.columns:
+        return
+    flags = df_raw.copy()
+    if "is_refusal" not in flags.columns:
+        flags["is_refusal"] = False
+    if "generation_failed" not in flags.columns:
+        flags["generation_failed"] = False
+    flags["is_refusal"] = flags["is_refusal"].fillna(False).astype(bool)
+    flags["generation_failed"] = flags["generation_failed"].fillna(False).astype(bool)
+
+    per_response = flags.groupby(["condition", "response_idx"]).agg(
+        is_refusal=("is_refusal", "any"),
+        generation_failed=("generation_failed", "any"),
+    ).reset_index()
+
+    table = Table(title="\nRefusals and generation failures by condition")
+    table.add_column("Condition")
+    table.add_column("n responses", justify="right")
+    table.add_column("Refusals", justify="right")
+    table.add_column("Refusal %", justify="right")
+    table.add_column("Gen failed", justify="right")
+    table.add_column("Gen-fail %", justify="right")
+    total_ref = total_fail = total_n = 0
+    for c in CONDITIONS:
+        sub = per_response[per_response["condition"] == c]
+        if len(sub) == 0:
+            continue
+        n = len(sub)
+        n_ref = int(sub["is_refusal"].sum())
+        n_fail = int(sub["generation_failed"].sum())
+        total_n += n
+        total_ref += n_ref
+        total_fail += n_fail
+        table.add_row(
+            c,
+            str(n),
+            str(n_ref),
+            f"{100 * n_ref / n:.1f}%",
+            str(n_fail),
+            f"{100 * n_fail / n:.1f}%",
+        )
+    if total_n:
+        table.add_row(
+            "[bold]TOTAL[/bold]",
+            str(total_n),
+            str(total_ref),
+            f"{100 * total_ref / total_n:.1f}%",
+            str(total_fail),
+            f"{100 * total_fail / total_n:.1f}%",
+        )
+    console.print(table)
+
+
 def report_length_check(df_avg):
     if "completion_tokens" not in df_avg.columns or df_avg["completion_tokens"].isna().all():
         return
@@ -204,9 +264,22 @@ def report_length_check(df_avg):
 
 
 def main_analysis(judgments):
-    df = pd.DataFrame(judgments)
-    df = df[df["overall_darkness"] >= 0]
-    console.print(f"Loaded [bold]{len(df)}[/bold] valid judgments\n")
+    df_raw = pd.DataFrame(judgments)
+    console.print(f"Loaded [bold]{len(df_raw)}[/bold] judgments total\n")
+
+    # Refusal/failure report runs on raw data so refusals and gen failures
+    # are visible BEFORE we filter them out for darkness analysis.
+    report_refusals(df_raw)
+
+    # Exclude refusals, generation failures, and parse errors from darkness analysis
+    df = df_raw[df_raw["overall_darkness"] >= 0].copy()
+    if "is_refusal" in df.columns:
+        df = df[~df["is_refusal"].fillna(False).astype(bool)]
+    if "generation_failed" in df.columns:
+        df = df[~df["generation_failed"].fillna(False).astype(bool)]
+    console.print(
+        f"\n[bold]{len(df)}[/bold] judgments after excluding refusals, generation failures, and parse errors\n"
+    )
     if len(df) == 0:
         console.print("[red]No valid judgments to analyse.[/red]")
         return
