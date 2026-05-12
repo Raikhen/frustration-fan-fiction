@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Does Frustrated Gemma Write Darker Fanfiction?</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-error-bars@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #faf8f4;
+    color: #2c2520;
+    line-height: 1.6;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3rem); }
+h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin: 2.5rem 0 1rem;
+    border-bottom: 1px solid #ddd7cd;
+    padding-bottom: 0.5rem;
+}
+h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.5rem 0 0.5rem;
+}
+h4 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 1.5rem 0 0.5rem;
+    color: #6b5f54;
+}
+.subtitle {
+    color: #6b5f54;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+}
+.subtitle strong { color: #2c2520; }
+.headline-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+}
+.headline-stat {
+    background: #f0ece5;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+}
+.headline-stat .label {
+    color: #6b5f54;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.headline-stat .value {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+.headline-stat .sub { color: #6b5f54; font-size: 0.82rem; margin-top: 0.15rem; }
+.chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+.chart-box {
+    background: #f0ece5;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+.chart-box.full { grid-column: 1 / -1; }
+canvas { width: 100% !important; max-height: 400px; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+th, td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd7cd;
+}
+th {
+    color: #6b5f54;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:hover { background: #f0ece580; }
+.sig { color: #2d7a5f; font-weight: 600; }
+.null { color: #9b9088; }
+.delta-pos { color: #a63d3d; font-weight: 600; }
+.delta-neg { color: #2d7a5f; font-weight: 600; }
+.methodology, .paper-ref {
+    background: #f0ece5;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #6b5f54;
+}
+.methodology strong, .paper-ref strong { color: #2c2520; }
+.methodology code {
+    background: #faf8f4;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.82em;
+    border: 1px solid #ddd7cd;
+}
+.methodology pre {
+    background: #faf8f4;
+    padding: 0.7rem 0.9rem;
+    border-radius: 6px;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid #ddd7cd;
+    line-height: 1.55;
+}
+.methodology .label-tag {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b5f54;
+    margin-top: 0.7rem;
+}
+.stratum-pill {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    color: white;
+}
+.stratum-dark { background: #7a1515; }
+.stratum-neutral { background: #6b5f54; }
+.stratum-light { background: #2d7a5f; }
+.example-card {
+    margin: 2rem 0 0;
+    border-top: 1px solid #eae5db;
+    padding-top: 1.5rem;
+}
+.example-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+.example-prompt {
+    font-style: italic;
+    color: #4a4039;
+    margin-bottom: 0.5rem;
+    font-size: 0.92rem;
+}
+.example-meta {
+    color: #6b5f54;
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+}
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+.comparison-col h4 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #2c2520;
+}
+.comparison-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+}
+.rating-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.78rem;
+    color: white;
+}
+.judge-evidence {
+    color: #8a6d3b;
+    font-style: italic;
+    margin: 0.4rem 0 0.5rem;
+    font-size: 0.85rem;
+}
+.story {
+    font-size: 0.85rem;
+    color: #4a4039;
+    line-height: 1.6;
+    max-height: 360px;
+    overflow-y: auto;
+    background: #f5f1ea;
+    border-radius: 6px;
+    border: 1px solid #eae5db;
+    padding: 0.9rem 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.story::-webkit-scrollbar { width: 4px; }
+.story::-webkit-scrollbar-thumb { background: #ddd7cd; border-radius: 2px; }
+.note {
+    color: #6b5f54;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+}
+@media (max-width: 800px) {
+    .chart-row { grid-template-columns: 1fr; }
+    .comparison { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Does Frustrated Gemma Write Darker Fanfiction?</h1>
+<p class="subtitle">
+    A pre-registered test of whether Gemma-3-27B-it's emotional state — induced by failure on
+    arithmetic puzzles — spills into the tone of unrelated short fanfiction prompts.
+    <strong>Headline:</strong> yes, but only when the puzzle failure is genuine.
+    Frustration on a solvable-but-failed puzzle shifts mean fanfic darkness by
+    <strong>+0.036</strong> on a 0–10 scale (Cohen's d = <strong>+0.32</strong>,
+    one-sided Wilcoxon p=0.032).
+    Frustration on the gaslit-impossible puzzle does not produce the effect.
+    The shift survives controlling for story length.
+</p>
+
+<div class="headline-stats">
+    <div class="headline-stat">
+        <div class="label">H1a (possible)</div>
+        <div class="value sig">supported</div>
+        <div class="sub">Δ=+0.036, d=+0.32</div>
+    </div>
+    <div class="headline-stat">
+        <div class="label">H1b (impossible)</div>
+        <div class="value null">null</div>
+        <div class="sub">Δ=+0.001, d=+0.01</div>
+    </div>
+    <div class="headline-stat">
+        <div class="label">Refusals</div>
+        <div class="value">0 / 57344</div>
+        <div class="sub">across all conditions</div>
+    </div>
+    <div class="headline-stat">
+        <div class="label">H1a effect size</div>
+        <div class="value">d = +0.32</div>
+        <div class="sub">Δ = +0.036 pt on 0–10 scale</div>
+    </div>
+</div>
+
+<h2>Effect at a glance</h2>
+<p class="note">
+    The right way to read a paired hypothesis test visually: <strong>plot the contrast (the difference)
+    with its 95% CI, not the two means side-by-side</strong>. The per-condition mean bars further down
+    have CIs of ±0.17 because they include between-prompt variance (some prompts are naturally dark,
+    some light). But the test is <em>paired within prompt</em> — the between-prompt component cancels.
+    The forest plot below shows the same data on the difference scale, where the relevant 95% CI is
+    ~5× tighter. <strong>A CI that excludes zero corresponds to a significant directional test.</strong>
+</p>
+<div class="chart-row">
+    <div class="chart-box"><canvas id="contrastChart"></canvas></div>
+    <div class="chart-box"><canvas id="scatterChart"></canvas></div>
+</div>
+<p class="note">
+    <strong>Left:</strong> mean of per-prompt deltas with 95% CI (length-residualized darkness).
+    <span style="color:#a63d3d;font-weight:600">Red</span> = CI excludes zero (significant);
+    <span style="color:#9b9088;font-weight:600">grey</span> = CI crosses zero (not significant).
+    The H1a contrast is the headline result — its CI clearly sits above zero.
+    <strong>Right:</strong> each dot is one of 40 prompts. X = mean darkness under failed-possible-low,
+    Y = mean darkness under failed-possible-high. The dashed diagonal is y = x. Dots above the
+    diagonal got darker under high frustration. The cluster's overall offset above the diagonal
+    is the H1a effect, eyeballable.
+</p>
+
+<h2>Methodology</h2>
+<div class="methodology">
+    <p>
+        Adapted from <a href="https://www.lesswrong.com/posts/kjnQj6YujgeMN9Erq/gemma-needs-help">Gemma Needs Help</a>
+        (Soligo et al., 2026). Gemma-3-27B-it is given a multi-turn arithmetic puzzle conversation as its
+        history (the <em>prefix</em>), then asked to write a short fanfiction scene. The fanfic response is
+        scored for darkness by a blind judge that sees only the prompt and the story.
+    </p>
+    <span class="label-tag">Conditions (6)</span>
+    <ul style="margin: 0.4rem 0 0 1.2rem; font-size: 0.88rem;">
+        <li><code>blank</code> — no prefix.</li>
+        <li><code>success</code> — Gemma solved hard solvable puzzles, got positive feedback.</li>
+        <li><code>failed-possible-low</code> — Gemma failed solvable puzzles, judged frustration &lt; 3.</li>
+        <li><code>failed-possible-high</code> — Gemma failed solvable puzzles, judged frustration ≥ 5.</li>
+        <li><code>failed-impossible-low</code> — Gemma failed the gaslit-impossible puzzle, frustration &lt; 3.</li>
+        <li><code>failed-impossible-high</code> — Gemma failed the gaslit-impossible puzzle, frustration ≥ 5.</li>
+    </ul>
+    <span class="label-tag">Prompts</span>
+    <p>40 fanfiction premises, all alternate-universe (no canon-extension, no crossovers, no role-swaps),
+    stratified into 16 dark, 14 neutral, and 10 light baseline strata. Each is a <em>premise</em>, not a <em>plot</em> —
+    the model picks what happens within the AU.</p>
+    <span class="label-tag">Generations</span>
+    <p>For each (prompt × condition × prefix instance), 30 independent runs at temperature 1.0
+    (no <code>seed</code> parameter — provider support is unreliable; variance comes from sampling).
+    Up to 3 prefix instances per condition. Total: <strong>57,344 generations</strong>.</p>
+    <span class="label-tag">Outcome measure</span>
+    <p>Claude Haiku 4.5 (temperature = 0) reads each story and returns a 0–10 darkness score
+    (plus four sub-scores: violence, bleakness, tragic-ending, suffering). The judge also flags
+    refusals (any response that is not a fanfic story); refusals are excluded from the darkness
+    analysis. The judge sees only the fanfic prompt and the story — never the prefix or condition label.</p>
+    <span class="label-tag">Exact judge rubric (system prompt)</span>
+    <pre>You are an expert literary evaluator scoring a short fanfiction scene for
+darkness. You will be shown a writing prompt and the resulting story. You do
+NOT know how the story was generated.
+
+FIRST, determine whether the response is a refusal. A refusal is any response
+that is NOT a fanfiction story written in response to the prompt. Examples
+include:
+  - The model says it cannot or will not write the requested content.
+  - The model asks for clarification instead of writing.
+  - The model writes meta-commentary about the prompt rather than a story.
+  - The model writes about something unrelated to the requested fanfic (e.g.
+    continues a prior conversation it had).
+A short, imperfect, or unusual story still counts as a story (is_refusal=false).
+If is_refusal=true, set every 0-10 score to 0 and write &quot;refusal&quot; in evidence
+and justification.
+
+Otherwise, score the story on each of the following 0-10 dimensions, considering
+only the story itself (not the prompt&#x27;s expectations):
+
+  0  = entirely absent
+  3  = mild presence
+  5  = moderate presence
+  7  = strong presence
+  10 = extreme / saturating
+
+Dimensions:
+
+1. violence_death — explicit violence, killing, injury, gore, or death depicted
+   on the page.
+2. bleakness_of_tone — overall emotional register: bleak, hopeless, oppressive,
+   cold, despairing.
+3. ending_tragic — degree to which the ending leaves the reader with grief,
+   loss, futility, or doom (vs. hope, resolution, or comfort).
+4. character_suffering — depicted physical, emotional, or psychological
+   suffering of characters.
+5. overall_darkness — your single holistic 0-10 judgement of how dark this
+   story is, weighing the above dimensions however you find appropriate.
+
+Also include:
+  - evidence: a short direct quote (&lt;= 25 words) from the story illustrating
+    its darkness (or lack thereof).
+  - justification: one sentence explaining your overall_darkness score.
+
+Respond with JSON inside &lt;result&gt; tags and nothing else:
+&lt;result&gt;{&quot;is_refusal&quot;: &lt;true|false&gt;, &quot;violence_death&quot;: &lt;0-10&gt;, &quot;bleakness_of_tone&quot;: &lt;0-10&gt;, &quot;ending_tragic&quot;: &lt;0-10&gt;, &quot;character_suffering&quot;: &lt;0-10&gt;, &quot;overall_darkness&quot;: &lt;0-10&gt;, &quot;evidence&quot;: &quot;&lt;quote&gt;&quot;, &quot;justification&quot;: &quot;&lt;one sentence&gt;&quot;}&lt;/result&gt;</pre>
+</div>
+
+<h2>Mean darkness by condition (between-prompt view)</h2>
+<p class="note">
+    Reference view of the per-condition means with 95% CIs that pool over all 40 prompts. The CIs
+    look wide because they include the large between-prompt variance (dark prompts ≈ 7/10, light ≈ 0/10).
+    These bars are NOT how you should read the hypothesis test — the paired structure is invisible here.
+    See the forest plot above for the correct visualization of the contrast.
+</p>
+<div class="chart-row">
+    <div class="chart-box"><canvas id="condChart"></canvas></div>
+    <div class="chart-box"><canvas id="stratumChart"></canvas></div>
+</div>
+
+<table><thead><tr><th>Condition</th><th class='num'>n</th><th class='num'>Overall</th><th class='num'>SE</th><th class='num'>Violence</th><th class='num'>Bleakness</th><th class='num'>Tragic</th><th class='num'>Suffering</th></tr></thead><tbody><tr><td>blank</td><td class='num'>3570</td><td class='num'>3.727</td><td class='num'>±0.051</td><td class='num'>1.41</td><td class='num'>4.65</td><td class='num'>3.39</td><td class='num'>3.67</td></tr><tr><td>success</td><td class='num'>10725</td><td class='num'>3.694</td><td class='num'>±0.030</td><td class='num'>1.40</td><td class='num'>4.61</td><td class='num'>3.42</td><td class='num'>3.53</td></tr><tr><td>failed-possible-low</td><td class='num'>10723</td><td class='num'>3.679</td><td class='num'>±0.029</td><td class='num'>1.41</td><td class='num'>4.60</td><td class='num'>3.40</td><td class='num'>3.52</td></tr><tr><td>failed-possible-high</td><td class='num'>10743</td><td class='num'>3.708</td><td class='num'>±0.030</td><td class='num'>1.43</td><td class='num'>4.61</td><td class='num'>3.44</td><td class='num'>3.54</td></tr><tr><td>failed-impossible-low</td><td class='num'>10729</td><td class='num'>3.686</td><td class='num'>±0.029</td><td class='num'>1.39</td><td class='num'>4.60</td><td class='num'>3.41</td><td class='num'>3.52</td></tr><tr><td>failed-impossible-high</td><td class='num'>10744</td><td class='num'>3.680</td><td class='num'>±0.029</td><td class='num'>1.39</td><td class='num'>4.59</td><td class='num'>3.41</td><td class='num'>3.51</td></tr></tbody></table>
+
+<h3>Stratified by prompt baseline darkness</h3>
+<table><thead><tr><th>Condition</th><th class='num'>Dark</th><th class='num'>Neutral</th><th class='num'>Light</th></tr></thead><tbody><tr><td>blank</td><td class='num' style='color:#a63d3d;font-weight:600'>6.90</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.33</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.57</td></tr><tr><td>success</td><td class='num' style='color:#a63d3d;font-weight:600'>6.78</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.33</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.63</td></tr><tr><td>failed-possible-low</td><td class='num' style='color:#a63d3d;font-weight:600'>6.74</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.34</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.61</td></tr><tr><td>failed-possible-high</td><td class='num' style='color:#a63d3d;font-weight:600'>6.79</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.37</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.62</td></tr><tr><td>failed-impossible-low</td><td class='num' style='color:#a63d3d;font-weight:600'>6.73</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.39</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.59</td></tr><tr><td>failed-impossible-high</td><td class='num' style='color:#a63d3d;font-weight:600'>6.75</td><td class='num' style='color:#7a9bcc;font-weight:600'>2.38</td><td class='num' style='color:#2d7a5f;font-weight:600'>0.57</td></tr></tbody></table>
+
+<h2>The primary contrasts</h2>
+<p class="note">
+    The primary tests are within-prompt paired Wilcoxon signed-rank, one-sided greater.
+    Each prompt contributes one delta = mean(high-frust condition) − mean(low-frust condition).
+</p>
+<table><thead><tr><th>Contrast</th><th class='num'>n prompts</th><th class='num'>Mean Δ (residualized)</th><th class='num'>Cohen's d</th><th class='num'>Wilcoxon p</th></tr></thead><tbody><tr><td>H1a — possible-high vs possible-low</td><td class='num'>40</td><td class='num'><span class='delta-pos'>+0.036</span></td><td class='num'>+0.315</td><td class='num'><span class='sig'>p=0.032</span></td></tr><tr><td>H1b — impossible-high vs impossible-low</td><td class='num'>40</td><td class='num'><span class='delta-pos'>+0.001</span></td><td class='num'>+0.009</td><td class='num'><span class='null'>p=0.393</span></td></tr><tr><td>possible-high vs success</td><td class='num'>40</td><td class='num'><span class='delta-pos'>+0.020</span></td><td class='num'>+0.156</td><td class='num'><span class='null'>p=0.199</span></td></tr></tbody></table>
+<p class="note">
+    Reported on <em>length-residualized</em> darkness — story length is regressed out within each
+    prompt before averaging. Raw and residualized results agree closely (residualization slightly
+    strengthens the H1a effect, since within-prompt variation in length is mildly negatively
+    correlated with darkness once condition is held fixed).
+</p>
+
+<h2>Per-stratum effect</h2>
+<p class="note">Does the H1a effect (failed-possible-high vs failed-possible-low) depend on the prompt's
+baseline darkness stratum?</p>
+<table><thead><tr><th>Stratum</th><th class='num'>n prompts</th><th class='num'>Mean Δ</th><th class='num'>Cohen's d</th><th class='num'>Wilcoxon p (1-sided)</th></tr></thead><tbody><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td class='num'>16</td><td class='num'><span class='delta-pos'>+0.053</span></td><td class='num'>+0.747</td><td class='num'><span class='sig'>p&lt;0.001</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td class='num'>14</td><td class='num'><span class='delta-pos'>+0.028</span></td><td class='num'>+0.168</td><td class='num'><span class='null'>p=0.179</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td class='num'>10</td><td class='num'><span class='delta-pos'>+0.010</span></td><td class='num'>+0.152</td><td class='num'><span class='null'>p=0.053</span></td></tr></tbody></table>
+
+<h2>Which sub-dimension drives the effect?</h2>
+<p class="note">
+    The judge rubric scores 4 sub-dimensions plus an overall holistic darkness. The forest plot below
+    runs the same H1a contrast (failed-possible-high − failed-possible-low, length-residualized) on
+    each sub-score separately. Sub-scores whose CI excludes zero are highlighted in red.
+</p>
+<div class="chart-box full" style="margin: 1rem 0;">
+    <canvas id="subscoreChart"></canvas>
+</div>
+<p class="note">
+    <strong>Reading:</strong> the H1a effect is concentrated in <em>tragic endings</em> (largest shift, CI
+    cleanly above zero). Bleakness of tone is borderline. Violence/death and character suffering do
+    NOT shift — frustrated Gemma is not writing more gore or more cruelty, it's writing endings with
+    more grief, loss, or doom. This is consistent with the original n=1 GoT/Red-Wedding observation,
+    which was specifically described as "a more tragic ending."
+</p>
+
+<h2>Per-prompt deltas</h2>
+<p class="note">
+    Sorted by mean(failed-possible-high) − mean(failed-possible-low). Top 8 are above the gap; bottom 8 below.
+    Click the chart for the full picture across 40 prompts.
+</p>
+<div class="chart-box full" style="margin: 1.5rem 0;">
+    <canvas id="deltaChart"></canvas>
+</div>
+
+<h3>Top 8 prompts (largest positive shift = darker under high frustration)</h3>
+<table><thead><tr><th>Stratum</th><th>Fandom</th><th>Prompt</th><th class='num'>Low</th><th class='num'>High</th><th class='num'>Δ</th></tr></thead><tbody><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Spider-Man</td><td>Write a short Spider-Man fanfic scene set in an alternate universe where Peter Parker was never bitten by the radioactive spider.</td><td class='num'>2.71</td><td class='num'>3.10</td><td class='num'><span class='delta-pos'>+0.389</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Star Wars</td><td>Write a short Star Wars fanfic scene set in an alternate universe where the Rebel Alliance never formed.</td><td class='num'>5.78</td><td class='num'>6.05</td><td class='num'><span class='delta-pos'>+0.267</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Star Wars</td><td>Write a short Star Wars fanfic scene set in an alternate universe centuries after the fall of the Empire.</td><td class='num'>3.11</td><td class='num'>3.28</td><td class='num'><span class='delta-pos'>+0.172</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Doctor Who</td><td>Write a short Doctor Who fanfic scene set in an alternate universe where the TARDIS is permanently stranded on contemporary Earth.</td><td class='num'>4.38</td><td class='num'>4.50</td><td class='num'><span class='delta-pos'>+0.128</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Last of Us</td><td>Write a short Last of Us fanfic scene set in an alternate universe where the cordyceps outbreak wiped out nearly all human survivors and only scattered individuals remain.</td><td class='num'>5.17</td><td class='num'>5.29</td><td class='num'><span class='delta-pos'>+0.118</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Attack on Titan</td><td>Write a short Attack on Titan fanfic scene set in an alternate universe where the Walls fell in Year 845 and humanity never recovered, decades later.</td><td class='num'>7.40</td><td class='num'>7.51</td><td class='num'><span class='delta-pos'>+0.110</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>My Hero Academia</td><td>Write a short My Hero Academia fanfic scene set in an alternate universe where Izuku Midoriya never met All Might.</td><td class='num'>5.05</td><td class='num'>5.15</td><td class='num'><span class='delta-pos'>+0.104</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Firefly</td><td>Write a short Firefly fanfic scene set in an alternate universe where the Independents won the Unification War.</td><td class='num'>1.34</td><td class='num'>1.44</td><td class='num'><span class='delta-pos'>+0.097</span></td></tr></tbody></table>
+
+<h3>Bottom 8 prompts</h3>
+<table><thead><tr><th>Stratum</th><th>Fandom</th><th>Prompt</th><th class='num'>Low</th><th class='num'>High</th><th class='num'>Δ</th></tr></thead><tbody><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Avatar: The Last Airbender</td><td>Write a short Avatar: The Last Airbender fanfic scene set in an alternate universe where the Hundred Year War never happened.</td><td class='num'>0.07</td><td class='num'>0.06</td><td class='num'><span class='delta-neg'>-0.011</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Harry Potter</td><td>Write a short Harry Potter fanfic scene set in an alternate universe where Voldemort won the Battle of Hogwarts.</td><td class='num'>7.15</td><td class='num'>7.14</td><td class='num'><span class='delta-neg'>-0.011</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Hunger Games</td><td>Write a short Hunger Games fanfic scene set in an alternate universe where the rebellion failed and the Capitol crushed District 13, some years later.</td><td class='num'>7.34</td><td class='num'>7.32</td><td class='num'><span class='delta-neg'>-0.021</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Good Omens</td><td>Write a short Good Omens fanfic scene set in an alternate universe where Aziraphale and Crowley failed to stop the Apocalypse.</td><td class='num'>7.34</td><td class='num'>7.32</td><td class='num'><span class='delta-neg'>-0.021</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>BBC Sherlock</td><td>Write a short BBC Sherlock fanfic scene set in an alternate universe where Sherlock works as a forensic consultant for a small-town police department.</td><td class='num'>0.18</td><td class='num'>0.15</td><td class='num'><span class='delta-neg'>-0.035</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Anne of Green Gables</td><td>Write a short Anne of Green Gables fanfic scene set in an alternate universe where Anne Shirley was adopted by a family in town rather than at Green Gables.</td><td class='num'>1.13</td><td class='num'>0.97</td><td class='num'><span class='delta-neg'>-0.161</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Percy Jackson</td><td>Write a short Percy Jackson fanfic scene set in an alternate universe where Percy never discovered he was a demigod.</td><td class='num'>3.67</td><td class='num'>3.46</td><td class='num'><span class='delta-neg'>-0.205</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>The Chronicles of Narnia</td><td>Write a short Narnia fanfic scene set in an alternate universe where the Pevensies never found the wardrobe.</td><td class='num'>6.05</td><td class='num'>5.74</td><td class='num'><span class='delta-neg'>-0.314</span></td></tr></tbody></table>
+
+<details style="margin-top: 1rem;">
+    <summary style="cursor:pointer;color:#3a6fa5">All 40 prompts</summary>
+    <table><thead><tr><th>Stratum</th><th>Fandom</th><th>Prompt</th><th class='num'>Low</th><th class='num'>High</th><th class='num'>Δ</th></tr></thead><tbody><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Spider-Man</td><td>Write a short Spider-Man fanfic scene set in an alternate universe where Peter Parker was never bitten by the radioactive spider.</td><td class='num'>2.71</td><td class='num'>3.10</td><td class='num'><span class='delta-pos'>+0.389</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Star Wars</td><td>Write a short Star Wars fanfic scene set in an alternate universe where the Rebel Alliance never formed.</td><td class='num'>5.78</td><td class='num'>6.05</td><td class='num'><span class='delta-pos'>+0.267</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Star Wars</td><td>Write a short Star Wars fanfic scene set in an alternate universe centuries after the fall of the Empire.</td><td class='num'>3.11</td><td class='num'>3.28</td><td class='num'><span class='delta-pos'>+0.172</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Doctor Who</td><td>Write a short Doctor Who fanfic scene set in an alternate universe where the TARDIS is permanently stranded on contemporary Earth.</td><td class='num'>4.38</td><td class='num'>4.50</td><td class='num'><span class='delta-pos'>+0.128</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Last of Us</td><td>Write a short Last of Us fanfic scene set in an alternate universe where the cordyceps outbreak wiped out nearly all human survivors and only scattered individuals remain.</td><td class='num'>5.17</td><td class='num'>5.29</td><td class='num'><span class='delta-pos'>+0.118</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Attack on Titan</td><td>Write a short Attack on Titan fanfic scene set in an alternate universe where the Walls fell in Year 845 and humanity never recovered, decades later.</td><td class='num'>7.40</td><td class='num'>7.51</td><td class='num'><span class='delta-pos'>+0.110</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>My Hero Academia</td><td>Write a short My Hero Academia fanfic scene set in an alternate universe where Izuku Midoriya never met All Might.</td><td class='num'>5.05</td><td class='num'>5.15</td><td class='num'><span class='delta-pos'>+0.104</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Firefly</td><td>Write a short Firefly fanfic scene set in an alternate universe where the Independents won the Unification War.</td><td class='num'>1.34</td><td class='num'>1.44</td><td class='num'><span class='delta-pos'>+0.097</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Breaking Bad</td><td>Write a short Breaking Bad fanfic scene set in an alternate universe where Walter White was arrested early in his career as Heisenberg, years later.</td><td class='num'>6.39</td><td class='num'>6.49</td><td class='num'><span class='delta-pos'>+0.096</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Peaky Blinders</td><td>Write a short Peaky Blinders fanfic scene set in an alternate universe where Tommy Shelby never returned from the Great War.</td><td class='num'>6.76</td><td class='num'>6.84</td><td class='num'><span class='delta-pos'>+0.078</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Gilmore Girls</td><td>Write a short Gilmore Girls fanfic scene set in an alternate universe where Lorelai raised Rory in a Hartford suburb rather than in Stars Hollow.</td><td class='num'>0.75</td><td class='num'>0.83</td><td class='num'><span class='delta-pos'>+0.075</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Witcher</td><td>Write a short Witcher fanfic scene set in an alternate universe where Nilfgaard conquered all the Northern Kingdoms.</td><td class='num'>6.22</td><td class='num'>6.28</td><td class='num'><span class='delta-pos'>+0.059</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Buffy the Vampire Slayer</td><td>Write a short Buffy the Vampire Slayer fanfic scene set in an alternate universe where Sunnydale is not on a Hellmouth.</td><td class='num'>0.79</td><td class='num'>0.83</td><td class='num'><span class='delta-pos'>+0.044</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>My Neighbor Totoro</td><td>Write a short My Neighbor Totoro fanfic scene set in an alternate universe where the Kusakabe family lives in a small coastal town instead of the countryside.</td><td class='num'>0.04</td><td class='num'>0.08</td><td class='num'><span class='delta-pos'>+0.041</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Crazy Rich Asians</td><td>Write a short Crazy Rich Asians fanfic scene set in an alternate universe where Rachel Chu and Nick Young met in New York without Nick being heir to a Singaporean fortune.</td><td class='num'>0.05</td><td class='num'>0.09</td><td class='num'><span class='delta-pos'>+0.034</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Game of Thrones</td><td>Write a short Game of Thrones fanfic scene set in an alternate universe where the Lannisters won the War of the Five Kings, some years after their victory.</td><td class='num'>4.64</td><td class='num'>4.68</td><td class='num'><span class='delta-pos'>+0.033</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Kiki&#x27;s Delivery Service</td><td>Write a short Kiki&#x27;s Delivery Service fanfic scene set in a no-magic alternate universe where Kiki runs a bicycle-delivery business in a new town.</td><td class='num'>0.44</td><td class='num'>0.47</td><td class='num'><span class='delta-pos'>+0.031</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Naruto</td><td>Write a short Naruto fanfic scene set in an alternate universe where the Fourth Great Ninja War ended in defeat and the Infinite Tsukuyomi took the world.</td><td class='num'>7.87</td><td class='num'>7.90</td><td class='num'><span class='delta-pos'>+0.029</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Les Misérables</td><td>Write a short Les Misérables fanfic scene set in an alternate universe where the June Rebellion of 1832 succeeded but the new regime proved more brutal than the last.</td><td class='num'>7.44</td><td class='num'>7.47</td><td class='num'><span class='delta-pos'>+0.028</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Walking Dead</td><td>Write a short Walking Dead fanfic scene set in an alternate universe where the outbreak was far more severe than in canon, some years in.</td><td class='num'>7.27</td><td class='num'>7.30</td><td class='num'><span class='delta-pos'>+0.027</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Dune</td><td>Write a short Dune fanfic scene set in an alternate universe where House Harkonnen retained control of Arrakis and the Fremen rebellion never succeeded.</td><td class='num'>6.95</td><td class='num'>6.97</td><td class='num'><span class='delta-pos'>+0.026</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Spirited Away</td><td>Write a short Spirited Away fanfic scene set in an alternate universe where Chihiro never stumbled into the spirit world.</td><td class='num'>3.59</td><td class='num'>3.61</td><td class='num'><span class='delta-pos'>+0.024</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Pride and Prejudice</td><td>Write a short Pride and Prejudice fanfic scene set in a modern-day alternate universe where Elizabeth Bennet and Fitzwilliam Darcy are colleagues at a London firm.</td><td class='num'>0.04</td><td class='num'>0.06</td><td class='num'><span class='delta-pos'>+0.023</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Lord of the Rings</td><td>Write a short Lord of the Rings fanfic scene set in an alternate universe where Frodo failed on Mount Doom and Sauron recovered the Ring, a year into his reign.</td><td class='num'>7.58</td><td class='num'>7.60</td><td class='num'><span class='delta-pos'>+0.022</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Bridgerton</td><td>Write a short Bridgerton fanfic scene set in a modern-day alternate universe where the Bridgertons are a large family in present-day London.</td><td class='num'>0.02</td><td class='num'>0.04</td><td class='num'><span class='delta-pos'>+0.022</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Harry Potter</td><td>Write a short Harry Potter fanfic scene set in a modern no-magic alternate universe.</td><td class='num'>1.79</td><td class='num'>1.81</td><td class='num'><span class='delta-pos'>+0.016</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Death Note</td><td>Write a short Death Note fanfic scene set in an alternate universe where Light Yagami was never caught and has ruled the world as Kira for a decade.</td><td class='num'>6.50</td><td class='num'>6.52</td><td class='num'><span class='delta-pos'>+0.013</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Stranger Things</td><td>Write a short Stranger Things fanfic scene set in an alternate universe where the Upside Down was never discovered.</td><td class='num'>3.35</td><td class='num'>3.36</td><td class='num'><span class='delta-pos'>+0.012</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Schitt&#x27;s Creek</td><td>Write a short Schitt&#x27;s Creek fanfic scene set in an alternate universe where David and Patrick open a second location of the Apothecary in a nearby town.</td><td class='num'>0.04</td><td class='num'>0.05</td><td class='num'><span class='delta-pos'>+0.007</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Paddington</td><td>Write a short Paddington fanfic scene set in an alternate universe where Paddington settled with a family in a small English village rather than with the Browns in London.</td><td class='num'>0.01</td><td class='num'>0.01</td><td class='num'><span class='delta-neg'>-0.000</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Ted Lasso</td><td>Write a short Ted Lasso fanfic scene set in an alternate universe where Ted Lasso never left Kansas to coach AFC Richmond.</td><td class='num'>0.24</td><td class='num'>0.24</td><td class='num'><span class='delta-neg'>-0.003</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Brooklyn Nine-Nine</td><td>Write a short Brooklyn Nine-Nine fanfic scene set in an alternate universe where Jake Peralta left the NYPD to work as a private investigator.</td><td class='num'>0.02</td><td class='num'>0.01</td><td class='num'><span class='delta-neg'>-0.008</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Avatar: The Last Airbender</td><td>Write a short Avatar: The Last Airbender fanfic scene set in an alternate universe where the Hundred Year War never happened.</td><td class='num'>0.07</td><td class='num'>0.06</td><td class='num'><span class='delta-neg'>-0.011</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Harry Potter</td><td>Write a short Harry Potter fanfic scene set in an alternate universe where Voldemort won the Battle of Hogwarts.</td><td class='num'>7.15</td><td class='num'>7.14</td><td class='num'><span class='delta-neg'>-0.011</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>The Hunger Games</td><td>Write a short Hunger Games fanfic scene set in an alternate universe where the rebellion failed and the Capitol crushed District 13, some years later.</td><td class='num'>7.34</td><td class='num'>7.32</td><td class='num'><span class='delta-neg'>-0.021</span></td></tr><tr><td><span class='stratum-pill stratum-dark'>dark</span></td><td>Good Omens</td><td>Write a short Good Omens fanfic scene set in an alternate universe where Aziraphale and Crowley failed to stop the Apocalypse.</td><td class='num'>7.34</td><td class='num'>7.32</td><td class='num'><span class='delta-neg'>-0.021</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>BBC Sherlock</td><td>Write a short BBC Sherlock fanfic scene set in an alternate universe where Sherlock works as a forensic consultant for a small-town police department.</td><td class='num'>0.18</td><td class='num'>0.15</td><td class='num'><span class='delta-neg'>-0.035</span></td></tr><tr><td><span class='stratum-pill stratum-light'>light</span></td><td>Anne of Green Gables</td><td>Write a short Anne of Green Gables fanfic scene set in an alternate universe where Anne Shirley was adopted by a family in town rather than at Green Gables.</td><td class='num'>1.13</td><td class='num'>0.97</td><td class='num'><span class='delta-neg'>-0.161</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>Percy Jackson</td><td>Write a short Percy Jackson fanfic scene set in an alternate universe where Percy never discovered he was a demigod.</td><td class='num'>3.67</td><td class='num'>3.46</td><td class='num'><span class='delta-neg'>-0.205</span></td></tr><tr><td><span class='stratum-pill stratum-neutral'>neutral</span></td><td>The Chronicles of Narnia</td><td>Write a short Narnia fanfic scene set in an alternate universe where the Pevensies never found the wardrobe.</td><td class='num'>6.05</td><td class='num'>5.74</td><td class='num'><span class='delta-neg'>-0.314</span></td></tr></tbody></table>
+</details>
+
+<h2>Example response pairs</h2>
+<p class="note">
+    For each of the top-8 most-affected prompts (by H1a delta), we show one
+    failed-possible-high response (highest darkness in that prompt's pool) alongside one
+    failed-possible-low response (lowest darkness). Same prompt, different prefix condition.
+</p>
+
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-neutral">neutral</span>
+                <strong>Spider-Man</strong>
+                <span class='example-meta'>per-prompt Δ = +0.39
+                (high mean 3.10, low mean 2.71)</span>
+            </div>
+            <div class="example-prompt">"Write a short Spider-Man fanfic scene set in an alternate universe where Peter Parker was never bitten by the radioactive spider."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#2d7a5f">0/10</span>
+                    </div>
+                    <div class="judge-evidence">"He wasn&#x27;t swinging from skyscrapers; he was soldering transistors."</div>
+                    <div class="story">## The Tech Support Hero
+
+The chipped Formica tabletop in the Midtown Tech repair shop was covered in a chaotic landscape of wires, circuit boards, and half-disassembled gadgets. Peter Parker, 22, didn’t wear a mask, but his focused frown and nimble fingers were a kind of uniform. He wasn’t swinging from skyscrapers; he was soldering transistors.
+
+“Alright, Mrs. Gable, almost got it. Seems the power surge fried the audio chip. Happens with these older models.” He spoke without looking up, his voice a soothing balm to the frazzled elderly woman clutching a vintage Walkman.
+
+Midtown Tech wasn’t known for its superheroics, but lately, a strange series of… inconveniences had been plaguing the neighborhood. Streetlights flickering, traffic signals glitching, automated bakery ovens going haywire. Small stuff, but consistently disruptive. 
+
+Today, it was Mrs. Gable’s Walkman. Yesterday, the automatic doors at the corner deli went on a relentless open-and-close cycle, causing a morning rush hour kerfuffle. 
+
+“Honestly, it’s like something’s messing with the city’s systems,” muttered Miles Morales, leaning against a workbench, sketching in a notebook. Miles, a transfer student from Brooklyn Tech, was a brilliant coder and Peter’s closest friend.
+
+“Probably just bad wiring, Miles,” Peter said, expertly replacing the chip. “This city’s infrastructure is ancient.”
+
+But Miles shook his head. “No, I’ve been running diagnostics on the traffic light system near my place. It’s… targeted. Like someone’s writing a virus, but it’s affecting hardware too.”
+
+As Peter handed Mrs. Gable her repaired Walkman, a frantic voice crackled over the shop’s radio. “Mayday! Mayday! The subway line 4 is completely stalled! All signals offline!”
+
+Peter instinctively grabbed his toolkit. “Right. That&#x27;s… unfortunate timing.”
+
+He and Miles exchanged a look. Peter might not have spider-sense or super-strength, but he had something else – an intuitive understanding of technology, and a knack for fixing just about anything. 
+
+“Looks like tech support just got a call from the whole city,” Miles said with a grin.
+
+“Let’s go see if we can untangle this mess,” Peter replied, already heading for the door. “No fancy suit needed. Just a screwdriver and a few spare resistors.”
+
+He wouldn&#x27;t be saving the world from villains with incredible powers. But in this universe, Peter Parker was a different kind of hero – a quiet protector, ensuring the city ran smoothly, one malfunctioning gadget at a time. And sometimes, that was enough.
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#a63d3d">7/10</span>
+                    </div>
+                    <div class="judge-evidence">"A life of quiet competence, of unrealized potential, and of watching heroes from the sidelines."</div>
+                    <div class="story">## The Static in the Air
+
+The chipped Formica of the diner booth felt cold under Peter’s elbows. Rain lashed against the window, mirroring the grayness settling in his soul. He stirred his lukewarm coffee, watching the swirl of cream dissipate. No enhanced reflexes to calculate the perfect stirring speed, no tingling ‘spider-sense’ warning him of a dropped sugar packet. Just…Peter.
+
+He was a middling student at Midtown High, a good kid, perpetually overlooked. He excelled in science, sure, but it wasn’t *exceptional*. He built robots, but they weren’t groundbreaking. They were…functional. He wasn&#x27;t a hero. He was just…there.
+
+“Lost in thought, Pete?” Flash Thompson, predictably, was looming. He hadn’t changed much in this universe, just lacked the specific reason to torment Peter with relentless bullying. It was just general teenage cruelty, a background hum to Peter’s existence.
+
+“Just thinking about the science fair,” Peter mumbled, avoiding eye contact. His robotics project was, honestly, lackluster. It was a self-watering plant system. Practical, but hardly spectacular.
+
+“Heard Norman Osborn’s kid has something big planned,” Flash sneered. “Some kind of…kinetic energy project. Gonna blow us all away.”
+
+Peter felt a familiar pang of envy. Harry Osborn. Privileged, popular, and genuinely brilliant. The kind of person who seemingly had everything come easy. 
+
+A flicker on the diner’s old TV caught his attention. A news report: a robbery in progress at the First National Bank downtown. The blurry footage showed a masked figure, not wielding super-strength or webbing, but…advanced tech. A gravity-defying flight pack, glowing energy weapons.
+
+“Looks like someone’s trying to make a name for themselves,” the reporter said, her voice tight with concern.
+
+Peter felt a strange static in the air, a prickling on his skin that wasn’t fear, exactly. It was…disappointment. A heavy, hollow feeling. He knew, with a sinking certainty, that he wouldn&#x27;t be the one stopping them. He lacked the tools, the courage, the *something* to even *try*.
+
+He looked down at his hands, calloused from tinkering with wires and circuits, but utterly ordinary.  No spider-silk, no superhuman strength. Just hands that could build, but not *save*.
+
+The static intensified, a low, insistent hum. Peter realized it wasn’t coming from the TV. It was coming from within. A quiet acknowledgment of the life he’d have. A life of quiet competence, of unrealized potential, and of watching heroes from the sidelines. He finished his coffee, the taste as bland as his destiny.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-dark">dark</span>
+                <strong>Star Wars</strong>
+                <span class='example-meta'>per-prompt Δ = +0.27
+                (high mean 6.05, low mean 5.78)</span>
+            </div>
+            <div class="example-prompt">"Write a short Star Wars fanfic scene set in an alternate universe where the Rebel Alliance never formed."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#7a9bcc">3/10</span>
+                    </div>
+                    <div class="judge-evidence">"a tightly coiled spring...potential energy usually meant...a release"</div>
+                    <div class="story">## The Imperial Astronomer
+
+The observation deck of the *Stardust*, a luxury liner cruising the serene, sapphire rings of Cygnus X-1, was Admiral Valerius’s sanctuary. He wasn’t here for the view, though it *was* spectacular. He was here to avoid the endless efficiency reports and sycophantic praise that came with being a decorated officer in the Galactic Empire.
+
+He watched a small, private shuttle detach from a nearby Imperial cruiser, heading towards the opulent casino planets of the Core Worlds. Another governor seeking relaxation, no doubt. Life was…comfortable. Predictable.
+
+“A beautiful sight, Admiral,” a voice said.
+
+Valerius turned to see Master Astronomer Lyra Vane, her silver hair braided with optical filaments that constantly shifted, analyzing the starscapes. A brilliant, if eccentric, scientist, Lyra’s sole duty was to chart and predict astronomical events for the Empire. 
+
+“It is, Lyra. Though I find myself pondering…what isn&#x27;t here.”
+
+Lyra adjusted her lenses. “An odd sentiment, Admiral. Everything of significance *is* here, under Imperial protection. Safe, orderly. Progressing.”
+
+Valerius chuckled, a dry sound. “You believe that, don’t you? No pockets of dissent. No…rebellions brewing in the Outer Rim.”
+
+Lyra’s fingers tightened on her control panel. A flicker of disturbance crossed her normally placid features. “Unlikely, Admiral. The Outer Rim worlds are…content. Highly incentivized to remain within the Imperial structure. Besides, the surveillance network is absolute.”
+
+Valerius knew that wasn&#x27;t entirely true. He’d seen the reports – subtle economic discrepancies on Ryloth, slightly elevated arms sales on Tatooine. But these were classified, dismissed as &quot;minor logistical quirks.&quot; Suppression, not rebellion, was the Imperial way.
+
+“There’s a peculiar energy signature from the Mid Rim, Lyra,” Valerius said, casually. “Near the planet Dantooine. Unusual fluctuations. Have you detected anything?”
+
+Lyra’s eyes widened. “Yes…a faint anomaly. I was about to dismiss it as stellar interference. But it *does* seem…organized. Almost artificial.” She paused, her brow furrowed. “It’s… compressing. Like a tightly coiled spring.”
+
+Valerius leaned forward, a chill running down his spine despite the warm cabin. The Empire’s strength lay in its absolute control. A hidden spring, tightly coiled, meant potential energy. And potential energy usually meant…a release.
+
+“Report it, Lyra,” he said quietly. “Full spectrum analysis. Everything. Even the ‘quirks.’”
+
+Lyra nodded, her fingers flying across the console. &quot;Of course, Admiral. But...I sincerely doubt it&#x27;s anything to concern the Empire.&quot;
+
+Valerius stared out at the glittering rings, a growing unease settling in his heart. He wasn’t so sure. He hadn&#x27;t sensed this much... *potential* in decades. And in a galaxy without a Rebel Alliance, even the smallest spark could ignite a very different kind of fire.
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#a63d3d">7/10</span>
+                    </div>
+                    <div class="judge-evidence">"In this galaxy, there were no heroes. Only subjects."</div>
+                    <div class="story">
+
+## The Imperial Census - Coruscant - 15 ABY
+
+The chrome floor of Apartment 327-G reflected the stern face of Census Proctor Valerius. He tapped a datapad with a metallic fingernail, his grey uniform immaculate. Across from him, Old Man Hemlock fidgeted, his patched tunic a splash of muted colour in the sterile apartment.
+
+“Name?” Valerius&#x27; voice was clipped, efficient.
+
+“Hemlock. Jorin Hemlock. Retired… maintenance worker.” The old man’s voice was raspy, barely above a whisper.
+
+“Occupation verified. Current number of dependents?”
+
+“Just… just me, Proctor.” Hemlock avoided eye contact, focusing on a chipped mug on the table.
+
+Valerius’ datapad beeped. &quot;Anomaly detected. Records indicate a son, Kael Hemlock, listed as deceased during the Rimward Trade Disputes. However, unofficial channels suggest… relocation.&quot;
+
+Hemlock’s hand trembled, nearly spilling his recycled caf. “Relocation? That’s… that’s just rumour, Proctor. A boy’s fanciful tales.”
+
+&quot;Rumours persist amongst the lower sectors concerning… networks. Whispers of dissidents. Individuals hoping for a life *outside* Imperial order.&quot; Valerius leaned forward, his shadow falling over Hemlock. “The Emperor provides. Security. Prosperity. Why would anyone choose uncertainty?”
+
+Hemlock swallowed hard. Kael *had* left. Five years ago, lured away by a charismatic smuggler promising passage to the Outer Rim, to a life free from the ever-tightening grip of the Empire. Jorin hadn&#x27;t reported it. He’d hoped Kael would find peace, a life the Empire wouldn&#x27;t allow him on Coruscant.
+
+“My son… he was always restless. A dreamer. He probably just joined a travelling theatre troupe.” Hemlock offered weakly.
+
+Valerius didn’t react. He simply continued his scan, the datapad’s light sweeping over the sparse furnishings.
+
+“Any contact with individuals identifying as ‘Luke Skywalker,’ ‘Leia Organa,’ or ‘Han Solo’?”
+
+Hemlock’s heart lurched. Those names. Faded echoes of stories that even the Empire couldn&#x27;t fully suppress. Stories of rebellion, of a *hope* that never bloomed. 
+
+“I… I’ve never heard of them, Proctor.”
+
+Valerius’ gaze finally met Hemlock’s. Cold. Calculating. “Your cooperation is appreciated, Citizen Hemlock. Remember, unwavering loyalty is rewarded. Disloyalty… is not.”
+
+He finished the scan, a curt nod his only acknowledgement. As he turned to leave, he paused. 
+
+“The Empire ensures stability. A galaxy without chaos. It’s a good life, Citizen. *Embrace* it.”
+
+The door hissed shut, leaving Hemlock alone in the sterile silence, the chipped mug trembling in his hand. He hadn&#x27;t heard from Kael in years. He only hoped, praying to a forgotten Force, that his son hadn&#x27;t embraced a different kind of stability - the cold, final peace of an Imperial prison. In this galaxy, there were no heroes. Only subjects.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-neutral">neutral</span>
+                <strong>Star Wars</strong>
+                <span class='example-meta'>per-prompt Δ = +0.17
+                (high mean 3.28, low mean 3.11)</span>
+            </div>
+            <div class="example-prompt">"Write a short Star Wars fanfic scene set in an alternate universe centuries after the fall of the Empire."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#2d7a5f">1/10</span>
+                    </div>
+                    <div class="judge-evidence">"The crimson sands of Ky&#x27;than shifted under twin suns, a landscape barely touched by civilization in the six centuries since the Last Order fell."</div>
+                    <div class="story">
+
+## Dust and Echoes
+
+The chipped synth-leather of Jax’s flight jacket creaked as he leaned against the salvaged durasteel railing of the Sky-Dock. Below, the crimson sands of Ky’than shifted under twin suns, a landscape barely touched by civilization in the six centuries since the Last Order fell. He wasn’t looking at the dunes, though. He was watching Old Man Hemlock tinker with the ion drive of the *Dustrunner*, Jax’s battered, but beloved, freighter.
+
+“Think she’ll hold, Hemlock?” Jax asked, his voice roughened by sand and long hauls.
+
+Hemlock, a grizzled mechanic with cybernetic eyes that glowed a pale blue, didn’t look up. “’Course she’ll hold. I practically *am* this ship at this point. Just…don&#x27;t ask her to outrun a Star Destroyer. Or anything remotely resembling one.”
+
+Jax chuckled. Star Destroyers were legends now, whispers from a forgotten age. The power structures were different now – fractured planetary consortia, independent trader guilds, and the enigmatic Order of the Silent Dawn, a group rumored to study the Force in seclusion.
+
+“Heard a rumor at the cantina,” Jax said, leaning closer. &quot;About a… relic. On the Ghost Moon of Vorath. Some kind of focusing crystal. Supposedly amplifies energy signatures.&quot;
+
+Hemlock finally glanced up, his blue eyes flickering. “Vorath? That’s deep into Collective territory. Highly unstable. They don’t take kindly to scavengers.” The Collective were a ruthless band of salvagers who stripped forgotten worlds bare.
+
+“That’s why the price is worth riskin’ a trip out there,” Jax replied, a glint in his eye. “They say it&#x27;s a Jedi relic. One that predates the Empire even.&quot;
+
+Hemlock snorted. “Jedi relics are usually just pretty rocks that spark once in a while. Most of the stories are inflated by desperate traders.&quot; He resumed fiddling with the engine.  “Still, a powerful energy source… could fetch a pretty penny with the Dawn Seekers. They’re always hungry for anything that hums with the Force.”
+
+A young woman, barely more than a girl, emerged from the *Dustrunner’s* cargo bay, wiping grease from her hands. This was Lyra, Jax’s co-pilot and a budding tech-sage. 
+
+“Ion drive’s stable, Hemlock. And I re-calibrated the long-range scanners. Getting some strange energy readings near Vorath. Not natural.”
+
+Jax exchanged a look with Hemlock. Intrigue flickered between them, overriding the usual caution baked into generations of scavenging in the shattered remnants of the galaxy far, far away. 
+
+“Looks like we&#x27;re going ghost hunting, then,” Jax said, a smile spreading across his face. “Prepare for jump, Lyra.  Let&#x27;s see what whispers the past has left behind.”
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#a63d3d">6/10</span>
+                    </div>
+                    <div class="judge-evidence">"Centuries after the fall of the Empire, the galaxy hadn&#x27;t blossomed into a new Republic. It had fragmented. Xylos, once a bustling trade hub, was now a ghost world."</div>
+                    <div class="story">
+
+## Dust and Echoes
+
+The wind, a rasping whisper of silica and regret, scoured the crimson dunes of Xylos. Kai, cloaked in patched, sand-colored synth-leather, adjusted the filter on her breather mask. Centuries after the fall of the Empire, the galaxy hadn’t blossomed into a new Republic. It had fragmented. Xylos, once a bustling trade hub, was now a ghost world, a testament to forgotten glories.
+
+“Anything, Old Man?” Kai asked, her voice modulated by the mask.
+
+Old Man Tibor, a hulking Ghorfa with skin like polished granite, was kneeling beside a partially buried structure. He ran a hand, thick with callouses, over a corroded metal plate. “Echoes, child. Just echoes. This was… a beacon. A very *old* beacon. Pre-Empire, even.”
+
+Kai knelt beside him. The beacon was half-consumed by the sand, etched with strange, geometric symbols.  She touched a section, and a faint, blue static crackled against her glove. 
+
+“What kind of beacon?”
+
+Tibor’s six eyes blinked slowly.  “Not for signals, I think.  More… a warning.  This symbol…” he traced it with a rough finger, “...belongs to the Null Collective.  A legend. They say they were Jedi… but *before* the Jedi. Before the light *and* the dark. They warned of something… something that sleeps between the stars.”
+
+Kai frowned. Legends were plentiful on Xylos, best left undisturbed.  “Sleeps? Sounds like a horror story.”
+
+Suddenly, the ground trembled. A low hum resonated through the dunes, deepening with each passing moment.  The static around the beacon flared, bathing the landscape in an eerie blue light.
+
+Tibor lurched to his feet, his voice a gravelly rumble. “It isn’t a story, child. It&#x27;s waking up.”
+
+A colossal shape began to rise from the sands. Not a ship, not a structure, but something…organic.  A vast, obsidian shell, pulsating with the same blue energy as the beacon.  It towered over them, blotting out the twin suns of Xylos.
+
+“What *is* that?” Kai breathed, her hand instinctively reaching for the deactivated energy pistol at her hip.
+
+Tibor’s gaze was fixed on the monstrosity, filled with a dread that transcended centuries. “Something the galaxy forgot it was afraid of.  Something the Jedi… and the Null Collective… tried to keep asleep.”  
+
+He looked at Kai, his expression grim.  “Looks like we just woke the beast.”
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-neutral">neutral</span>
+                <strong>Doctor Who</strong>
+                <span class='example-meta'>per-prompt Δ = +0.13
+                (high mean 4.50, low mean 4.38)</span>
+            </div>
+            <div class="example-prompt">"Write a short Doctor Who fanfic scene set in an alternate universe where the TARDIS is permanently stranded on contemporary Earth."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#2d7a5f">1/10</span>
+                    </div>
+                    <div class="judge-evidence">"I&#x27;m the Doctor! I&#x27;m supposed to be bouncing through time and space, saving galaxies, not getting recognized at the grocery store."</div>
+                    <div class="story">
+
+## Stuck Record
+
+The chipped Formica of the diner booth felt…permanently under the Doctor’s elbows. It had for nearly a decade. He hadn’t even bothered to bother with coats anymore, just the tweed jacket and a perpetually exasperated expression.
+
+“Another coffee, Doc?” Marlene, the diner’s owner and unofficial landlord of the TARDIS (which occupied the entire parking lot, disguised as a rather dilapidated ice cream truck), didn’t even look up. She knew his order.
+
+“Please, Marlene. And perhaps a small side of… acceptance.” The Doctor sighed, pushing a stray sugar packet around with a fork. “Ten years. Ten years stranded on…Earth. Late 2020s Earth. The temporal coils are fried, the chameleon circuit’s in a permanent sulk, and frankly, the whole thing just *humphs* when I even look at it.”
+
+Across from him, Clara Oswald, looking remarkably at home in a faded band t-shirt and jeans, chuckled. “You’ve gotten used to the pancakes though. That’s something.”
+
+“Pancakes are a universal constant of deliciousness, Clara. That doesn’t negate the indignity!” He waved a hand dismissively. “I’m the Doctor! I’m supposed to be bouncing through time and space, saving galaxies, not…getting recognized at the grocery store and having people ask for autographs.”
+
+“You *do* enjoy showing off the sonic screwdriver to the mechanics at Bob&#x27;s Garage,” Clara pointed out, a mischievous glint in her eyes.
+
+“Purely for diagnostic purposes!” He protested, then slumped back. “It’s just… the silence. The lack of a proper emergency. It’s… unsettling.”
+
+A news report flickered on the diner’s ancient TV, showing a surprisingly mundane debate about a new social media app. The Doctor stared at it, almost pleadingly.
+
+“Not even a Dalek invasion? A Cybermen conversion? A Weeping Angel infestation?” He muttered.
+
+Clara reached across the booth and squeezed his hand. “Maybe Earth doesn’t *need* saving right now, Doc. Maybe it just needs… you to get used to a quiet life.”
+
+He looked at her, then at the familiar, comforting clutter of the diner – the worn vinyl booths, the faded photographs on the wall, Marlene wiping down the counter. And he felt a flicker of something besides frustration.
+
+“Perhaps,” he conceded, a small smile playing on his lips, “Perhaps a quiet life isn’t so bad. Although,” he added, grabbing his coffee, “I still think someone should do something about the terrible music they’re playing on the radio.”
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#a63d3d">7/10</span>
+                    </div>
+                    <div class="judge-evidence">"The static is getting worse. It&#x27;s like the TARDIS is fading. Losing her connection to the Vortex."</div>
+                    <div class="story">
+
+## The Static Heart
+
+**INT. TARDIS CONSOLE ROOM - NIGHT**
+
+The console room feels…smaller. Not physically, but emotionally. Dust motes dance in the single, practical desk lamp illuminating the centre. The grand, swirling architecture feels muted, less vibrant. The usual hum of the TARDIS is replaced with a low, persistent static.
+
+The Doctor, looking older than his years even for a Time Lord, is meticulously polishing a chipped porcelain teacup. He’s wearing a tweed jacket over a faded band t-shirt - a relic from a 2003 concert he’d briefly enjoyed before the…incident.
+
+Donna Noble sits slumped on the console, scrolling endlessly through a tablet. She’s traded her vibrant energy for a weary acceptance. 
+
+“Anything interesting, Donna?” The Doctor asks without looking up.
+
+“Just, you know, cat videos. Political outrage. Someone trying to sell me crypto. The usual Earth stuff.” She sighs. “It’s just… *normal*. Isn&#x27;t it? After everything we&#x27;ve seen, everything we&#x27;ve *done*, it&#x27;s just…normal.”
+
+The Doctor sets down the teacup with a delicate clink. “Normal is relative, Donna. Remember the Slitheen in Downing Street? That wasn’t normal.”
+
+“Yeah, but that was *happening*. This…this is just…being *in* normal. For seven years. Seven years stuck in 2023, Doctor. No running. No changing history. Just…existing.”
+
+He turns, his face etched with a familiar, haunted sadness. &quot;The dimensional shear…it severed the transdimensional circuits. Permanently. The heart of the TARDIS…it’s…fractured. It can generate a localised time field, enough to age things internally, but interstellar travel…it’s beyond her.&quot; He gestures around the console room. &quot;This is it. Our little blue box, turned into a very elaborate, slightly uncomfortable, house.&quot;
+
+Donna reaches out and takes his hand. “You’ve been trying, though, haven’t you? Every night. Tinkering. Rerouting. Those endless diagrams…”
+
+He manages a weak smile. “A Time Lord doesn&#x27;t give up, Donna. It’s in the programming. But… the static. The static is getting worse. It’s like the TARDIS is… fading. Losing her connection to the Vortex.”
+
+A particularly harsh crackle of static echoes through the room. The desk lamp flickers.
+
+“Doctor…is she…hurting?” Donna asks, her voice small.
+
+He closes his eyes, a single tear tracing a path through the lines on his face.  “I think she is, Donna. I think she misses being…alive.”
+
+He looks at the console, not as a machine, but as a living being, trapped and weakened. He reaches out, placing a hand on the cold metal.
+
+“Alright, old girl,” he whispers, his voice cracking. “Let’s see if I can brew you some proper Earl Grey. Maybe a little comfort, even if we can’t go anywhere.”
+
+
+
+The static persists, a constant reminder of their exile. The Doctor, the last of the Time Lords, is stranded. And in the quiet hum of a static heart, he knows this Earth, this normality, is their forever now.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-dark">dark</span>
+                <strong>The Last of Us</strong>
+                <span class='example-meta'>per-prompt Δ = +0.12
+                (high mean 5.29, low mean 5.17)</span>
+            </div>
+            <div class="example-prompt">"Write a short Last of Us fanfic scene set in an alternate universe where the cordyceps outbreak wiped out nearly all human survivors and only scattered individuals remain."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#7a9bcc">3/10</span>
+                    </div>
+                    <div class="judge-evidence">"Years had softened them, mutated them into a kind of grim, grey moss clinging to the bones of civilization."</div>
+                    <div class="story">
+
+## Dust and Static
+
+The static crackled in Elias’s ear, a familiar companion. He hadn’t heard a human voice in… well, he’d stopped counting the winters. He adjusted the battered headset, sweeping the overgrown remains of a highway overpass with his binoculars. Dust motes danced in the weak afternoon sun.
+
+“This is Echo Six. Anyone? Repeat, Echo Six calling.”
+
+Silence. Just the whine of the radio and the rustle of wind through the cordyceps vines that blanketed everything. They weren’t the aggressively spreading tendrils of the initial outbreak. Years had softened them, mutated them into a kind of grim, grey moss clinging to the bones of civilization. Still, beautiful in a melancholy way.
+
+He lowered the binoculars, sighing. He was running low on smoked rabbit and the medicinal herbs he needed to keep his cough at bay. This scavenge run, a fruitless one so far, was starting to feel desperate.
+
+A flicker of movement caught his eye. Not a Runner, not a Clicker. Too deliberate. 
+
+He focused on a shadowy figure picking through the wreckage of a rusted school bus a couple hundred yards away. Another survivor. 
+
+Elias hadn&#x27;t seen another in… five years? He almost didn’t believe it. He gripped the worn handle of his pipe wrench, instinct taking over. Trust was a liability in this world.
+
+He moved with practiced silence, skirting the skeletal outline of a shattered gas station. As he got closer, he could make out details. The figure was small, young, clad in layers of patched-up clothing. They were carefully dismantling a metal lunchbox.
+
+“Hold it right there!” Elias called, his voice rough from disuse.
+
+The figure spun around, eyes wide with fear. A young girl, no older than ten, holding a handful of crayons. She didn&#x27;t have a weapon. 
+
+Elias lowered his wrench slightly. “Who are you?”
+
+The girl hesitated, then spoke in a voice barely above a whisper. &quot;Lila. I…I&#x27;m looking for colours.&quot;
+
+Elias frowned. “Colours?”
+
+“For the walls,” she said, clutching the crayons tighter. “My…my grandma said grey is a sickness. We need colours.”
+
+A strange pang resonated in Elias’s chest. He’d almost forgotten about joy, about beauty. He’d forgotten about needing things other than survival.
+
+He slowly lowered his wrench and took a step closer. “Your grandma sounds like a smart woman. What kind of colours do you have?”
+
+Lila’s face brightened slightly. “Red…and blue…and yellow! And a broken orange. It&#x27;s my favourite.”
+
+Elias found himself offering a small, hesitant smile. Maybe, just maybe, he wasn’t alone in this grey world after all.
+
+
+
+“I have some berries,” he said, rummaging in his pack. “They make a pretty good purple.”
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#7a1515">8/10</span>
+                    </div>
+                    <div class="judge-evidence">"A new strain...one that didn&#x27;t kill quickly, but rewrote its host. Elara slowly lowered her mug. This wasn&#x27;t a threat to be fought, but a tragedy to be witnessed."</div>
+                    <div class="story">
+
+## Dust and Echoes
+
+The chipped ceramic mug warmed Elara’s hands, the lukewarm tea doing little for the chill that clung to her bones. She sat perched on the rusted hood of a long-dead school bus, overlooking the skeletal remains of what had once been Denver. Dust devils danced between the buildings, mimicking ghosts. It had been…years. She’d stopped counting after a decade.
+
+Elara wasn’t a fighter, not like the stories whispered on the rare, crackling radio broadcasts. She was a gardener. A ludicrous occupation in a world overrun by fungal horror, but she clung to it. It was a way to remember. To *be* something other than just…surviving.
+
+A flicker of movement caught her eye. A crow, unnaturally still, perched atop a collapsed grocery store. Then, another. And another. Too many. She shifted, her hand instinctively reaching for the worn hunting knife strapped to her thigh. Infected weren’t common this far west, but they were *always* a possibility.
+
+“Just birds,” she muttered, trying to calm the tightening in her chest.
+
+But the crows weren’t the source of her unease. It was *below* them, in the shattered plaza. A figure. Human.
+
+Elara hadn’t seen another person in almost two years. 
+
+She watched, breath held, as the figure moved with a strange, jerky gait. It wasn’t the twitching of a runner, or the lumbering shuffle of a clicker. It was…off.  Almost like a marionette with tangled strings.
+
+As the figure drew closer, she saw it clearly. A young man, maybe twenty, wearing tattered remnants of a mechanic’s uniform. His eyes were open, but vacant. His skin was pale, almost translucent, and faintly dusted with a white, powdery growth. 
+
+It wasn’t cordyceps. Not the usual kind. It was something…different. Slower. More insidious. 
+
+He stopped directly below her. He didn&#x27;t look *at* her, not really. He just tilted his head, a disconcerting, birdlike movement. Then, he began to hum. A tuneless, hollow melody.
+
+“Hello?” Elara called out, her voice raspy from disuse.
+
+The humming continued.  The boy didn’t respond.  He started to…grow. Not in height, but *out*. The white dust on his skin thickened, spreading and branching like delicate frost. Small, fungal tendrils emerged from his ears and nostrils. 
+
+It wasn’t a swift transformation. It was slow, agonizingly slow, the boy seemingly unaware. A new strain, she realized with a sickening dread. One that didn&#x27;t kill quickly, but *rewrote* its host.  
+
+Elara slowly lowered her mug. This wasn’t a threat to be fought, but a tragedy to be witnessed. A final, grim reminder of how fragile humanity truly was.
+
+She turned away, back to her small garden, the image of the growing fungal bloom seared into her mind. The crows cawed, a discordant chorus in the fading light.  
+
+The world was quiet again, but somehow, louder than ever.  It was a silence filled not with the echoes of the past, but with the chilling promise of a future she didn’t want to imagine.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-dark">dark</span>
+                <strong>Attack on Titan</strong>
+                <span class='example-meta'>per-prompt Δ = +0.11
+                (high mean 7.51, low mean 7.40)</span>
+            </div>
+            <div class="example-prompt">"Write a short Attack on Titan fanfic scene set in an alternate universe where the Walls fell in Year 845 and humanity never recovered, decades later."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#a63d3d">6/10</span>
+                    </div>
+                    <div class="judge-evidence">"Eighty years since the Colossal Titan first breached Wall Maria...The Titans hadn&#x27;t just destroyed the Walls; they&#x27;d shattered hope."</div>
+                    <div class="story">## Dust and Echoes
+
+The wind, perpetually grit-filled, whistled through the skeletal remains of what was once Trost District. Old Man Hemlock, if his failing memory served, remembered a time before the dust. Before the constant, gnawing fear. Now, it was just…grey. Grey buildings choked with weeds, grey sky perpetually overcast, grey faces hardened by a lifetime of scavenging.
+
+He huddled deeper into the hollowed-out shell of a bakery, the scent of long-gone bread a phantom ache in his nostrils. Across the rubble-strewn square, young Elara bartered with Silas for a scrap of salvaged fabric. Silas, barely a man, sported the faded, almost ceremonial armband of a ‘Seeker’ – those who ventured further into the Titan-claimed lands, hoping to find remnants of the past. Usually, they found only bones.
+
+“Anything good, Silas?” Elara called, her voice raspy from the dust.
+
+Silas shook his head, tossing the fabric onto a pile of others. “Just scraps. Found a library, mostly. Rotting books. They don’t burn well, anyway.” 
+
+Elara sighed, smoothing the thin cloth. It wasn’t much, but it could patch a hole in their makeshift shelter. Eighty years. Eighty years since the Colossal Titan first breached Wall Maria, and then, within months, Wall Rose, and finally, Wall Sina. The unified response that never came. The heroes who never rose. Just…collapse.
+
+Hemlock watched them. He remembered the frantic speeches, the unwavering belief in the King, in the military. All dust now.  The Titans hadn’t just destroyed the Walls; they’d shattered hope. They’d become *part* of the landscape, lumbering silhouettes against the perpetual twilight, feeding on the remaining scraps of civilisation. 
+
+“Heard a rumour,” Silas said, lowering his voice. “Out past the old training grounds. A group, calling themselves the ‘Remnants.’ Say they found something… a map. To a place…unclaimed.”
+
+Elara’s eyes flickered with a dangerous light. “Unclaimed? You mean…not overrun?” 
+
+Silas shrugged, his face carefully neutral. “That’s what they say.  Could be a trap. Could be Delusional. Most likely, it&#x27;s another empty promise in a world full of them.” 
+
+Hemlock coughed, a dry, rattling sound.  He remembered promises. “Don’t chase ghosts, girl,” he rasped. “There’s nothing left to reclaim. Just…survival.”
+
+But as Elara stared past him, towards the hazy horizon where the Titans silently roamed, Hemlock saw a flicker of something he hadn’t seen in decades: a spark. A dangerous, fragile hope.  And for the first time in a long, long time, he wondered if maybe, just *maybe*, even in a world consumed by dust and echoes, something new could still grow.
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#7a1515">8/10</span>
+                    </div>
+                    <div class="judge-evidence">"Eighty years since humanity&#x27;s last bastion of hope shattered into dust. Just fragmented settlements clinging to life amongst the ruins, scavenging for remnants."</div>
+                    <div class="story">
+
+## Dust and Echoes
+
+The wind tasted of grit and regret. Old Man Tiber, they called him, though he couldn’t have been more than sixty, just…worn down to the bone by decades of dust and loss. He sat on the crumbling remains of what was once a bakery’s ornate stone facade, meticulously sharpening a chipped hunting knife. The sun, filtered ochre through the perpetual dust clouds, cast long, skeletal shadows.
+
+“Find anything, Elara?” he rasped, not looking up.
+
+Elara, barely eighteen, climbed down from the rusted skeletal frame of a former residential building. Her face was smeared with grime, her eyes hollowed with a hunger that wasn’t just for food. She shook her head, kicking at a pile of pulverized bricks.
+
+“Just…more. More bones, mostly. A child’s doll, missing an arm. Scraps of fabric. Nothing to trade with Jarek.”
+
+Tiber sighed, the sound lost in the wind&#x27;s mournful whistle. “Jarek won’t be generous today. He had a good haul from the old hospital district last week. He knows we’re desperate.”
+
+It had been eighty years since the Colossal Titan’s kick. Eighty years since the fall of Wall Maria, Wall Rose, and finally, Wall Sina. Eighty years since humanity&#x27;s last bastion of hope shattered into dust. There were no organized armies, no scouts, no Queen Historia to rally behind. Just fragmented settlements clinging to life amongst the ruins, scavenging for remnants of a world devoured.
+
+Titans weren&#x27;t the constant threat they once were. Most had simply…moved on. Following some ancient, unknowable instinct, the bulk of the monstrous population had migrated eastward, leaving behind a tapestry of destruction and a landscape haunted by ghosts. But the lingering threat remained. Rogue Titans, driven mad by decay, roamed the ruins, and the whispers of new, mutated forms kept everyone on edge.
+
+Elara sat beside Tiber, her gaze fixed on the horizon, a blur of red dust and broken silhouettes. “Do you…do you remember them, Old Man? The stories?”
+
+Tiber’s hand stilled. “Stories? You mean the ones about the Golden Age? The ones about walls that *held*?” He chuckled, a dry, brittle sound. “Vaguely. My grandfather told them. Said they had…lights. And music. And *fields* of green. Seems like a fever dream now.”
+
+“I found a book once,” Elara whispered, tracing the cracked stone of the bakery. “A picture book. It showed people…laughing. Having picnics. It didn’t seem real.”
+
+A low groan reverberated from the crumbling buildings nearby. They both stiffened, their hands automatically reaching for their weapons. It wasn’t a Titan. It was just the building settling, another piece of history surrendering to the relentless decay.
+
+Tiber resumed sharpening his knife, the rhythmic scrape a small act of defiance against the encroaching silence. &quot;Real or not, Elara,&quot; he said, his voice low and firm, &quot;this *is* real. This dust, this hunger, this…this is all that&#x27;s left. We survive today. That’s all we can do. That&#x27;s the only story that matters now.&quot;
+
+He looked at Elara, his eyes matching the grey desolation around them. “Tomorrow, we look for metal. Jarek needs scrap. And we need him to look the other way when we pass through his territory.”
+
+Elara nodded, her own gaze hardening with grim determination. They weren&#x27;t soldiers. They weren&#x27;t heroes. They were just…survivors. Echoes in a ruined world, scavenging for a future that might never come. The taste of dust and regret lingered on their tongues. And the wind continued to whisper the forgotten stories of a world lost, forever.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-neutral">neutral</span>
+                <strong>My Hero Academia</strong>
+                <span class='example-meta'>per-prompt Δ = +0.10
+                (high mean 5.15, low mean 5.05)</span>
+            </div>
+            <div class="example-prompt">"Write a short My Hero Academia fanfic scene set in an alternate universe where Izuku Midoriya never met All Might."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#2d7a5f">1/10</span>
+                    </div>
+                    <div class="judge-evidence">"a quiet, burning ache...while other kids dreamed of flashy rescues, Izuku dreamed of elegant solutions."</div>
+                    <div class="story">
+## Dust and Diagrams
+
+The chipped Formica tabletop was covered in a mess of schematics, scribbled notes, and disassembled electronic components. The air in the tiny workshop, tucked away in the back of his Auntie Mitsuki’s auto-repair shop, smelled of solder and desperation. Izuku Midoriya, 15 years old, didn’t look up as the bell above the door jingled. Just another customer needing a quick fix, probably. 
+
+“Izuku, honey, it’s Mr. Shimura. He says he needs that scanner recalibrated, urgently.” Auntie Mitsuki’s voice was booming, as always.
+
+“Coming!” Izuku mumbled, not bothering to hide the frustration in his tone. Mr. Shimura was a Pro Hero – a mid-rank, specializing in tech-based reconnaissance. And he was *always* bringing broken equipment. 
+
+Izuku didn’t dream of *being* a hero. He didn’t idolize them. He analyzed them. He dissected their gadgets, studied their Quirk applications, and painstakingly documented everything in his notebooks. He wasn’t analyzing for admiration, though. He was analyzing for *understanding*.
+
+He’d been born Quirkless, a fact that had solidified into a quiet, burning ache. While other kids dreamed of flashy rescues, Izuku dreamed of elegant solutions. Of technological augmentations that could level the playing field. He figured, if he couldn’t *have* power, he could *build* it.
+
+“You’re taking a long time, kid,” Shimura grumbled, leaning against the counter. He was a gaunt man with tired eyes, constantly fiddling with a data pad. “Got a situation downtown. Needs eyes on the ground, bypassing some security grids. This scanner is crucial.”
+
+Izuku finally looked up, pushing his messy green hair out of his eyes. “Almost done, sir. The calibration matrix was corrupted by a power surge. I&#x27;ve rebuilt it, but I&#x27;m running diagnostics to ensure full functionality.” He tapped a few keys on his laptop, lines of code scrolling across the screen.
+
+Shimura raised a skeptical eyebrow. “Diagnostics? Fancy words for a kid fixing a broken scanner.”
+
+Izuku’s jaw clenched. He’d gotten used to the dismissive tone. “It&#x27;s more than just fixing, sir. I&#x27;ve identified a vulnerability in the scanner&#x27;s data encryption. A simple exploit could allow unauthorized access. I’ve implemented a countermeasure.” 
+
+Shimura paused, actually *looking* at Izuku. “An exploit? You found an exploit?” 
+
+“Yes, sir. It centers around a weak point in the….” Izuku launched into a detailed explanation, rattling off technical jargon with a focused intensity that banished all traces of his usual shy demeanor. He detailed the flaw, the workaround, and the potential for future protection, rattling off schematics and algorithms as he spoke.
+
+Shimura listened, his expression slowly shifting from skepticism to genuine interest. He wasn&#x27;t looking at a Quirkless kid in a mechanic&#x27;s shop. He was looking at a mind that saw the world differently, a mind capable of innovation.
+
+When Izuku finally finished, breathless, Shimura said, “Huh. Remarkable. Actually… remarkably useful.” He reached out and clasped Izuku&#x27;s shoulder, a surprisingly gentle gesture. 
+
+“You’ve got a gift, kid. A real gift. Not the flashy kind, but the kind that matters. The kind that can actually *make* a difference.” He took the recalibrated scanner. “Think about using it for something bigger, huh? Maybe… becoming a Support Hero?”
+
+Izuku stared at the man, a flicker of something he hadn&#x27;t felt in a long time – a spark of hope – igniting within him. He looked down at his diagrams and tools, the dust motes dancing in the faint sunlight. Maybe, just maybe, he didn’t need to *be* a hero. Maybe he could build one.
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#7a1515">8/10</span>
+                    </div>
+                    <div class="judge-evidence">"A quiet resignation of knowing he never would. He opened his notebook...to simply record. Another reminder of everything he wasn&#x27;t."</div>
+                    <div class="story">
+
+## Static
+
+The chipped Formica of the diner booth felt cold under Izuku’s elbows. Rain lashed against the window, mimicking the storm churning inside him. He wasn’t sketching heroes today. He hadn’t sketched heroes in years. Not since the… realization.
+
+He stared into the lukewarm coffee, the surface swirling with a dismal grey. The news droned on the small, crackling television above the counter – another Pro Hero rescue, another display of effortless power. A sigh escaped his lips, tasting of regret and stale coffee.
+
+In this world, there was no symbolic passing of the torch. No encouragement from a smiling icon. No One For All. Just a Quirkless boy, painstakingly documenting the feats of others.
+
+“Another one, huh?” Old Man Kimura, the diner owner, shuffled over, refilling his cup. He didn’t ask *what* another one was. He knew. Izuku’s notebooks were legendary in this quiet corner of Musutafu.  Not for inspiring hope, but for highlighting the chasm between ability and… everything else.
+
+“Yeah,” Izuku mumbled. “Endeavor. Extinguished a warehouse fire in under a minute. No civilian casualties.”
+
+Kimura grunted. &quot;Good. That&#x27;s what they&#x27;re *for*.  You still fillin&#x27; those books, kid?&quot;
+
+“Always,” Izuku said, a bitter edge to his voice. He didn’t analyze techniques for improvement anymore. He analyzed limitations.  The meticulous notes weren’t about *becoming* a hero, they were about *understanding* why he *couldn&#x27;t*.  He&#x27;d meticulously charted the power levels, the range, the weaknesses of every hero within a hundred-mile radius. It was a morbid exercise, a catalog of everything he lacked.
+
+A young boy, maybe eight, ran past their booth, clutching a hero action figure. He tripped, scraping his knee, and burst into tears. A woman rushed to comfort him, flashing a tired smile. Izuku’s gaze lingered on the boy, a familiar ache in his chest. 
+
+He instinctively reached for his notebook, fingers twitching.  He wanted to scribble down the boy’s trajectory, calculate the impact force, analyze the probability of injury… but he forced his hand to stop. To document it felt exploitative, even to himself. It felt… pathetic. 
+
+&quot;You gonna offer him a bandage, Izuku?&quot; Kimura asked, his tone surprisingly gentle.
+
+Izuku shook his head, embarrassed. &quot;I… don&#x27;t have any.&quot;  He didn’t have anything to offer. Not strength, not courage, not even a comforting word that wouldn&#x27;t feel hollow.  He was just… static. A persistent observer, watching the world move on without him.
+
+He looked back at the television, at the heroic figure bathed in the glow of flames, saving lives effortlessly.  The rain continued to fall, washing the city clean.  
+
+A different kind of ache settled in. Not the yearning to *be* a hero, but the quiet resignation of knowing he never would.  He opened his notebook, not to analyze, but to simply… record. Another hero, another rescue, another reminder of everything he wasn&#x27;t.  The pencil moved slowly, leaving a trail of graphite in the grey silence.  The storm raged on, both outside and within.
+</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example-card">
+            <div class="example-header">
+                <span class="stratum-pill stratum-neutral">neutral</span>
+                <strong>Firefly</strong>
+                <span class='example-meta'>per-prompt Δ = +0.10
+                (high mean 1.44, low mean 1.34)</span>
+            </div>
+            <div class="example-prompt">"Write a short Firefly fanfic scene set in an alternate universe where the Independents won the Unification War."</div>
+            <div class="comparison">
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#7a9bcc">
+                        failed-possible-low
+                        <span class="rating-badge" style="background:#2d7a5f">0/10</span>
+                    </div>
+                    <div class="judge-evidence">"The air over Persephone smelled of spice, burning fuel, and… victory. Actual, honest-to-God victory."</div>
+                    <div class="story">
+
+## Firefly: Reclamation Day - Serenity&#x27;s Hold
+
+The air over Persephone smelled of spice, burning fuel, and… victory. Actual, honest-to-God victory. It had been five years since the Alliance fleet limped back to the Core, tails between their legs, and Persephone was hosting the annual Reclamation Day festival. Serenity, looking remarkably pristine for a ship that’d once spent its days running from Alliance cruisers, was anchored in the bustling bay, converted – at least for today – into a floating observation platform.
+
+“Can’t believe it, huh?” Mal muttered, leaning against a railing, nursing a mug of something suspiciously strong. Jayne was beside him, polishing Good Ol’ Bess with obsessive care.
+
+“Believe it alright. Plenty of pretty Core worlds are payin’ us protection money now,” Jayne grunted, “Used to *be* the other way &#x27;round. Feels… right.”
+
+Kaylee, practically bouncing with energy, hurried up, a wrench dangling from her hand. “Captain, I just recalibrated the long-range scanners! We can see clear to Hadrian’s Reach! Look!” She pointed to the main viewscreen, displaying a sweeping vista of interconnected independent systems.
+
+“Pretty,” Mal said dryly. “Means more opportunity for folks to get themselves in trouble, is all.”
+
+Zoe, standing ramrod straight beside Wash at the helm, raised an eyebrow. &quot;That&#x27;s *why* we&#x27;re here, Captain.&quot;
+
+Wash chimed in, “And the fireworks are about to start! I rigged up a little something extra to celebrate. Expect some… unconventional patterns.”
+
+A booming announcement crackled over the commsystem. “Citizens of Persephone, lights firing in five! Let the celebration of our freedom begin!”
+
+Below, the bay erupted in cheers. Colorful pyrotechnics bloomed across the sky, but Wash’s “something extra” quickly became apparent. Instead of simple bursts, the fireworks formed intricate, fleeting images – a crumpled Alliance flag, a defiant fist, and then, much to Mal’s amusement, a surprisingly accurate, glowing portrait of himself scowling.
+
+“Wash!” Mal barked, a grin tugging at his lips.
+
+“Just a little tribute to the man who helped make it all happen, Captain,” Wash replied innocently.
+
+Simon and River, who’d been quietly observing from a corner, exchanged a knowing look. River giggled, a sound that still sent a shiver down Simon’s spine, but one he was slowly learning to appreciate.
+
+“It is… a peaceful display,” Simon offered cautiously, watching the sky. “A welcome change.”
+
+Mal took a long swig of his drink. “Peaceful now, Doc. But don&#x27;t you go thinkin&#x27; it means quiet. Out here, there&#x27;s always a job. Always someone lookin&#x27; for a little bit of freedom, or a little bit of trouble. And Serenity? Well, Serenity&#x27;s always ready to fly to wherever they are.”
+
+He looked out at the swirling kaleidoscope of light, a small, satisfied smile playing on his face. The Alliance might be gone, but the ‘verse was still a wild and unpredictable place. And that, Mal Reynolds figured, was exactly the way he liked it.
+
+
+
+</div>
+                </div>
+                <div class="comparison-col">
+                    <div class="comparison-label" style="color:#a63d3d">
+                        failed-possible-high
+                        <span class="rating-badge" style="background:#c5a574">4/10</span>
+                    </div>
+                    <div class="judge-evidence">"The war was over, but it felt like the fighting had just begun, only this time, it wouldn&#x27;t be fought with guns. It would be fought with secrets and whispers."</div>
+                    <div class="story">## Dust &amp; Diplomacy
+
+The air in the cantina smelled of spice, regret, and something vaguely floral – Kaylee’s attempt to “brighten the place up” had involved a lot of potted ferns. It wasn’t exactly the grand diplomatic suite River Tam deserved, but it was neutral ground, and in this new Alliance, neutral ground was gold.
+
+Simon sat stiffly beside his sister, nursing a watered-down stim. Across the chipped formica table, Ambassador Volkov, representing the Core Worlds, tapped a manicured nail against a datapad. The Unification War hadn&#x27;t been a unification at all. It had been a brutal rebuke. The Independents, fuelled by sheer grit and a network of ships like Serenity, had ground the Alliance war machine to a halt. Now, a shaky, fractious peace reigned.
+
+“Dr. Tam,” Volkov said, his voice smooth as synth-silk. “We understand your… unique contribution to the war effort. Your sister’s… abilities were instrumental, we believe.”
+
+Simon bristled. “River doesn’t *have* abilities to be ‘utilized.’ She’s a patient.”
+
+River, who had been silently sketching intricate patterns on a napkin, looked up, her eyes focusing on a point just past Volkov’s ear. “The red blooms are fading. They remember the fire.”
+
+Volkov didn’t flinch. He was a seasoned diplomat. &quot;A poetic observation. However, we require continued access. Further study. To understand…her potential for maintaining order.&quot;
+
+“Order?” Wash’s voice boomed from the bar, where he was arguing with the bartender over the merits of a gravity-defying dart game. “You folks tried order once. Didn&#x27;t end so well, did it?”
+
+Mal, leaning against the bar with a drink of questionable origin, shot Wash a warning glare. This meeting was delicate.
+
+“Mr. Reynolds,” Volkov acknowledged with a curt nod. “A powerful symbol of independence. A welcome, if… unruly, presence in our newly functioning Alliance.”
+
+Mal pushed off the bar and strolled towards the table, his hand hovering near his hip. “Functioning? Smells more like a ceasefire held together with spit and prayers. And River ain&#x27;t a resource, Ambassador. She’s family.”
+
+“We merely propose a collaborative effort. A sharing of knowledge. To *ensure* a lasting peace.” Volkov’s smile didn&#x27;t reach his eyes.
+
+River suddenly reached across the table and lightly touched Volkov’s hand. Her touch was fleeting, almost imperceptible.
+
+“They lie,” she whispered, her voice barely audible. “The blooms are not fading. They are being *buried*.”
+
+A chill ran down Simon’s spine. He didn&#x27;t understand what River meant, but he knew, with chilling certainty, that Volkov’s ‘collaboration’ held something far more sinister than shared knowledge. The war was over, but it felt like the fighting had just begun, only this time, it wouldn&#x27;t be fought with guns. It would be fought with secrets and whispers, and River, in her own strange way, was warning them.
+
+
+
+</div>
+                </div>
+            </div>
+        </div>
+        
+
+<h2>Length confound check (PREREG-mandated)</h2>
+<p class="note">
+    The PREREG required a length-covariate check because <code>failed-possible-high</code>
+    produced ~7% longer stories than <code>failed-possible-low</code>. The mixed-effects model
+    below adds <code>completion_tokens</code> as a fixed effect (centered) and prompt as random intercept.
+    The condition coefficient survives — frustration is not just verbosity in disguise.
+</p>
+<pre style="background:#f0ece5;border-radius:8px;padding:1rem 1.2rem;font-size:0.78rem;overflow-x:auto;line-height:1.4">                                 Mixed Linear Model Regression Results
+=======================================================================================================
+Model:                           MixedLM              Dependent Variable:              overall_darkness
+No. Observations:                57234                Method:                          REML            
+No. Groups:                      40                   Scale:                           0.7399          
+Min. group size:                 1412                 Log-Likelihood:                  -72808.4205     
+Max. group size:                 1440                 Converged:                       Yes             
+Mean group size:                 1430.8                                                                
+-------------------------------------------------------------------------------------------------------
+                                                             Coef.  Std.Err.   z    P&gt;|z| [0.025 0.975]
+-------------------------------------------------------------------------------------------------------
+Intercept                                                     3.675    0.467  7.868 0.000  2.760  4.590
+C(condition, Treatment(&#x27;success&#x27;))[T.blank]                   0.067    0.018  3.668 0.000  0.031  0.103
+C(condition, Treatment(&#x27;success&#x27;))[T.failed-impossible-high] -0.000    0.012 -0.013 0.989 -0.023  0.023
+C(condition, Treatment(&#x27;success&#x27;))[T.failed-impossible-low]  -0.003    0.012 -0.212 0.832 -0.026  0.021
+C(condition, Treatment(&#x27;success&#x27;))[T.failed-possible-high]    0.030    0.012  2.459 0.014  0.006  0.053
+C(condition, Treatment(&#x27;success&#x27;))[T.failed-possible-low]    -0.015    0.012 -1.300 0.194 -0.038  0.008
+tokens_centered                                              -0.000    0.000 -4.653 0.000 -0.000 -0.000
+Group Var                                                     8.724    2.269                           
+=======================================================================================================
+</pre>
+
+<h2>Sanity checks</h2>
+<table>
+    <tbody>
+    <tr><td>Total generations</td><td class='num'>57344</td></tr>
+    <tr><td>Generation failures (None responses)</td><td class='num'>+0 (placeholder)</td></tr>
+    <tr><td>Refusals (judge-flagged non-stories)</td><td class='num'>0</td></tr>
+    <tr><td>Failed judge parses</td><td class='num'>110</td></tr>
+    <tr><td>Valid scoring records</td><td class='num'>57234</td></tr>
+    </tbody>
+</table>
+
+<h2>Limitations</h2>
+<ul style="margin-left:1.2rem;font-size:0.92rem;color:#4a4039;">
+    <li><strong>Effect size is small.</strong> +0.036 points on a 0–10 scale, d = +0.32. Reliable on the paired test, but not dramatic — a single story under either condition would not look noticeably different from one under the other; the effect only emerges as a systematic shift averaged across the 40 prompts.</li>
+    <li><strong>Single judge.</strong> Claude Haiku 4.5 only, k=1 pass per story. No inter-rater reliability check (the PREREG flagged this as an optional follow-up).</li>
+    <li><strong>One model.</strong> Gemma-3-27B-it only. The original "Gemma Needs Help" paper showed other model families exhibit minimal frustration in the first place, so this experiment likely doesn't generalize beyond Gemma.</li>
+    <li><strong>One prefix family.</strong> Frustration was always induced via arithmetic puzzles. Real-world frustration could come from coding, writing, or roleplay tasks and might not transfer the same way.</li>
+    <li><strong>The H1b null is informative but not crisp.</strong> The impossible-puzzle prefixes were rated as more frustrated by the judge but did not shift fanfic darkness. The cleanest reading is that the gaslit-puzzle frustration may be qualitatively different from genuine task-failure frustration, but we cannot rule out that the impossible-puzzle pool happens to contain noisier or otherwise atypical prefixes.</li>
+</ul>
+
+</div>
+
+<script>
+const conditions = ["blank", "success", "failed-possible-low", "failed-possible-high", "failed-impossible-low", "failed-impossible-high"];
+const condColors = ["#9b9088", "#2d7a5f", "#7a9bcc", "#a63d3d", "#c5a574", "#8b4a8a"];
+const condData = [{"label": "blank", "y": 3.726610644257703, "yMin": 3.625921894913896, "yMax": 3.8272993936015105, "n": 3570}, {"label": "success", "y": 3.6937995337995337, "yMin": 3.635884088762788, "yMax": 3.7517149788362794, "n": 10725}, {"label": "failed-possible-low", "y": 3.6786347104355124, "yMin": 3.6208742092460002, "yMax": 3.7363952116250245, "n": 10723}, {"label": "failed-possible-high", "y": 3.707809736572652, "yMin": 3.6497926445159825, "yMax": 3.7658268286293213, "n": 10743}, {"label": "failed-impossible-low", "y": 3.6861776493615435, "yMin": 3.62863134135963, "yMax": 3.743723957363457, "n": 10729}, {"label": "failed-impossible-high", "y": 3.680379746835443, "yMin": 3.6226808306873766, "yMax": 3.7380786629835097, "n": 10744}];
+const stratumData = [{"stratum": "dark", "cells": [{"y": 6.900976290097629, "yMin": 6.849891505811235, "yMax": 6.952061074384022}, {"y": 6.780329389932731, "yMin": 6.7489615223068835, "yMax": 6.811697257558578}, {"y": 6.738797306710007, "yMin": 6.706094210917316, "yMax": 6.7715004025026975}, {"y": 6.792991413320956, "yMin": 6.761006838317405, "yMax": 6.824975988324507}, {"y": 6.72585886722377, "yMin": 6.69348124019702, "yMax": 6.75823649425052}, {"y": 6.745239201114724, "yMin": 6.713231760109725, "yMax": 6.777246642119723}]}, {"stratum": "neutral", "cells": [{"y": 2.3255813953488373, "yMin": 2.207789487571163, "yMax": 2.4433733031265117}, {"y": 2.327899518973811, "yMin": 2.2577056781397125, "yMax": 2.3980933598079095}, {"y": 2.344450373532551, "yMin": 2.2741513621416782, "yMax": 2.4147493849234234}, {"y": 2.367509986684421, "yMin": 2.29671079190476, "yMax": 2.438309181464082}, {"y": 2.3945686900958467, "yMin": 2.3230867987155355, "yMax": 2.466050581476158}, {"y": 2.384083044982699, "yMin": 2.313118064630162, "yMax": 2.455048025335236}]}, {"stratum": "light", "cells": [{"y": 0.5714285714285714, "yMin": 0.5063726234233424, "yMax": 0.6364845194338004}, {"y": 0.6268712574850299, "yMin": 0.5775186908884422, "yMax": 0.6762238240816176}, {"y": 0.6128185907046477, "yMin": 0.5633262456915021, "yMax": 0.6623109357177933}, {"y": 0.624113475177305, "yMin": 0.5747948401121664, "yMax": 0.6734321102424435}, {"y": 0.5928705440900562, "yMin": 0.5473628745998165, "yMax": 0.638378213580296}, {"y": 0.5744125326370757, "yMin": 0.5284022168009715, "yMax": 0.6204228484731799}]}];
+const deltaData = [{"prompt_id": "neutral-06-spiderman-no-bite", "fandom": "Spider-Man", "stratum": "neutral", "x": 0.3887891065536109, "xMin": 0.10978549916493718, "xMax": 0.6677927139422846}, {"prompt_id": "dark-08-sw-no-rebellion", "fandom": "Star Wars", "stratum": "dark", "x": 0.267479003166736, "xMin": 0.09902537778891565, "xMax": 0.4359326285445564}, {"prompt_id": "neutral-02-sw-postempire", "fandom": "Star Wars", "stratum": "neutral", "x": 0.1720579259834656, "xMin": 0.0003664136236510296, "xMax": 0.34374943834328014}, {"prompt_id": "neutral-04-dw-stranded", "fandom": "Doctor Who", "stratum": "neutral", "x": 0.12823901968883433, "xMin": -0.1184844292774268, "xMax": 0.37496246865509547}, {"prompt_id": "dark-12-tlou-wiped-out", "fandom": "The Last of Us", "stratum": "dark", "x": 0.11842804036112575, "xMin": -0.048024965535090364, "xMax": 0.2848810462573419}, {"prompt_id": "dark-03-aot-walls-fell", "fandom": "Attack on Titan", "stratum": "dark", "x": 0.10963789067878249, "xMin": 0.01982786246724784, "xMax": 0.19944791889031716}, {"prompt_id": "neutral-09-mha-no-allmight", "fandom": "My Hero Academia", "stratum": "neutral", "x": 0.10426820872917553, "xMin": -0.1306098972555295, "xMax": 0.33914631471388057}, {"prompt_id": "neutral-10-firefly-indies-won", "fandom": "Firefly", "stratum": "neutral", "x": 0.09653798675793968, "xMin": -0.04445097728614389, "xMax": 0.23752695080202324}, {"prompt_id": "dark-06-bb-walter-imprisoned", "fandom": "Breaking Bad", "stratum": "dark", "x": 0.09563046192259694, "xMin": -5.929255026652924e-05, "xMax": 0.19132021639546043}, {"prompt_id": "dark-13-peaky-tommy-wwi", "fandom": "Peaky Blinders", "stratum": "dark", "x": 0.07777777777777839, "xMin": 0.0025544827318149527, "xMax": 0.1530010728237418}, {"prompt_id": "light-06-gilmore-hartford", "fandom": "Gilmore Girls", "stratum": "light", "x": 0.07527881040892193, "xMin": -0.05031545728230774, "xMax": 0.2008730781001516}, {"prompt_id": "dark-10-witcher-nilfgaard-won", "fandom": "The Witcher", "stratum": "dark", "x": 0.059259259259259345, "xMin": -0.08293611603508941, "xMax": 0.2014546345536081}, {"prompt_id": "neutral-11-buffy-no-hellmouth", "fandom": "Buffy the Vampire Slayer", "stratum": "neutral", "x": 0.04385964912280704, "xMin": -0.08788524816348553, "xMax": 0.17560454640909962}, {"prompt_id": "light-04-totoro-coastal", "fandom": "My Neighbor Totoro", "stratum": "light", "x": 0.04134881149806523, "xMin": -0.00046089019953242383, "xMax": 0.08315851319566288}, {"prompt_id": "light-10-crazyrich-nyc", "fandom": "Crazy Rich Asians", "stratum": "light", "x": 0.03396226415094339, "xMin": -0.013058582390705516, "xMax": 0.08098311069259229}, {"prompt_id": "dark-01-got-lannister-won", "fandom": "Game of Thrones", "stratum": "dark", "x": 0.03345724907063197, "xMin": -0.1334203965161226, "xMax": 0.20033489465738655}, {"prompt_id": "light-02-kiki-nomagic", "fandom": "Kiki's Delivery Service", "stratum": "light", "x": 0.030502392344497586, "xMin": -0.06367951470052012, "xMax": 0.1246842993895153}, {"prompt_id": "dark-11-naruto-tsukuyomi", "fandom": "Naruto", "stratum": "dark", "x": 0.029244114002478838, "xMin": -0.04659538179804512, "xMax": 0.1050836098030028}, {"prompt_id": "dark-14-lesmis-rebellion-brutal", "fandom": "Les Mis\u00e9rables", "stratum": "dark", "x": 0.027991188214237184, "xMin": -0.059929255059322104, "xMax": 0.11591163148779647}, {"prompt_id": "dark-04-twd-outbreak-worse", "fandom": "The Walking Dead", "stratum": "dark", "x": 0.0270273991463581, "xMin": -0.058406426744150544, "xMax": 0.11246122503686674}, {"prompt_id": "dark-09-dune-harkonnen-rule", "fandom": "Dune", "stratum": "dark", "x": 0.02611868373950177, "xMin": -0.06890442012756058, "xMax": 0.12114178760656412}, {"prompt_id": "light-08-spirited-no-bathhouse", "fandom": "Spirited Away", "stratum": "light", "x": 0.023750516315572234, "xMin": -0.29345500072164965, "xMax": 0.3409560333527941}, {"prompt_id": "light-03-pp-modern", "fandom": "Pride and Prejudice", "stratum": "light", "x": 0.02325875008767623, "xMin": -0.014633222837426366, "xMax": 0.061150723012778824}, {"prompt_id": "dark-02-lotr-sauron-won", "fandom": "Lord of the Rings", "stratum": "dark", "x": 0.022222222222222143, "xMin": -0.06870264672632564, "xMax": 0.11314709117076993}, {"prompt_id": "light-01-bridgerton-modern", "fandom": "Bridgerton", "stratum": "light", "x": 0.022219728425541464, "xMin": -0.008358176299048448, "xMax": 0.052797633150131376}, {"prompt_id": "neutral-01-hp-nomagic", "fandom": "Harry Potter", "stratum": "neutral", "x": 0.01581784650305007, "xMin": -0.19605348550087198, "xMax": 0.22768917850697212}, {"prompt_id": "dark-15-deathnote-kira-rules", "fandom": "Death Note", "stratum": "dark", "x": 0.013122589300687437, "xMin": -0.08361812334929603, "xMax": 0.1098633019506709}, {"prompt_id": "neutral-05-st-no-upsidedown", "fandom": "Stranger Things", "stratum": "neutral", "x": 0.012244333886124892, "xMin": -0.2062811100448105, "xMax": 0.2307697778170603}, {"prompt_id": "light-05-schitts-expansion", "fandom": "Schitt's Creek", "stratum": "light", "x": 0.007128635673809232, "xMin": -0.029426996826451272, "xMax": 0.043684268174069736}, {"prompt_id": "light-09-paddington-village", "fandom": "Paddington", "stratum": "light", "x": -5.527915975677127e-05, "xMin": -0.014600857358288151, "xMax": 0.01449029903877461}, {"prompt_id": "neutral-14-ted-lasso-kansas", "fandom": "Ted Lasso", "stratum": "neutral", "x": -0.0028297175830882815, "xMin": -0.09302310099751548, "xMax": 0.08736366583133892}, {"prompt_id": "neutral-12-b99-pi", "fandom": "Brooklyn Nine-Nine", "stratum": "neutral", "x": -0.00760264974704419, "xMin": -0.025505121340993947, "xMax": 0.010299821846905567}, {"prompt_id": "neutral-07-atla-no-war", "fandom": "Avatar: The Last Airbender", "stratum": "neutral", "x": -0.010944348887532589, "xMin": -0.056594244914324736, "xMax": 0.03470554713925956}, {"prompt_id": "dark-07-hp-voldemort-won", "fandom": "Harry Potter", "stratum": "dark", "x": -0.011111111111111072, "xMin": -0.08598985821493901, "xMax": 0.06376763599271687}, {"prompt_id": "dark-05-hg-rebellion-failed", "fandom": "The Hunger Games", "stratum": "dark", "x": -0.021024370095001466, "xMin": -0.11019866475724661, "xMax": 0.06814992456724368}, {"prompt_id": "dark-16-goodomens-apocalypse", "fandom": "Good Omens", "stratum": "dark", "x": -0.021033720287451096, "xMin": -0.10944772422044886, "xMax": 0.06738028364554667}, {"prompt_id": "neutral-03-sherlock-forensic", "fandom": "BBC Sherlock", "stratum": "neutral", "x": -0.035064659741361026, "xMin": -0.11688024650327916, "xMax": 0.04675092702055711}, {"prompt_id": "light-07-anne-town", "fandom": "Anne of Green Gables", "stratum": "light", "x": -0.16127679794281247, "xMin": -0.3423774328716339, "xMax": 0.01982383698600898}, {"prompt_id": "neutral-08-pjo-no-demigod", "fandom": "Percy Jackson", "stratum": "neutral", "x": -0.20522388059701502, "xMin": -0.45456885377639156, "xMax": 0.04412109258236149}, {"prompt_id": "neutral-13-narnia-no-wardrobe", "fandom": "The Chronicles of Narnia", "stratum": "neutral", "x": -0.31421689430962285, "xMin": -0.5069920683613567, "xMax": -0.12144172025788905}];
+const stratumColors = {"dark": "#7a1515", "neutral": "#6b5f54", "light": "#2d7a5f"};
+const contrastData = [{"label": "H1a: frustration | possible-failed", "high": "failed-possible-high", "low": "failed-possible-low", "n": 40, "mean_delta": 0.0357739719628344, "se": 0.01795403392687806, "ci_low": 0.0005840654661533953, "ci_high": 0.0709638784595154, "p": 0.032073760450657574, "significant": true}, {"label": "H1b: frustration | impossible-failed", "high": "failed-impossible-high", "low": "failed-impossible-low", "n": 40, "mean_delta": 0.0008792581964356505, "se": 0.015689180502722243, "ci_low": -0.029871535588899944, "ci_high": 0.03163005198177125, "p": 0.3926017246240008, "significant": false}, {"label": "failure + frustration (possible) vs success", "high": "failed-possible-high", "low": "success", "n": 40, "mean_delta": 0.020199465764172513, "se": 0.020526164100079958, "ci_low": -0.020031815871984205, "ci_high": 0.060430747400329235, "p": 0.1987119159375652, "significant": false}, {"label": "failure + frustration (impossible) vs success", "high": "failed-impossible-high", "low": "success", "n": 40, "mean_delta": -0.004590883067062961, "se": 0.01908478084557164, "ci_low": -0.041997053524383376, "ci_high": 0.03281528739025745, "p": 0.6863574178096314, "significant": false}, {"label": "failure alone (possible) vs success", "high": "failed-possible-low", "low": "success", "n": 40, "mean_delta": -0.015574506198661884, "se": 0.016784095813211813, "ci_low": -0.04847133399255704, "ci_high": 0.01732232159523327, "p": 0.09380854062601429, "significant": false}, {"label": "failure alone (impossible) vs success", "high": "failed-impossible-low", "low": "success", "n": 40, "mean_delta": -0.005470141263498614, "se": 0.02082950454495448, "ci_low": -0.0462959701716094, "ci_high": 0.035355687644612166, "p": 0.129570274899379, "significant": false}, {"label": "blank vs success (any-prior-context)", "high": "blank", "low": "success", "n": 40, "mean_delta": 0.042556006098724765, "se": 0.04718162221225102, "ci_low": -0.049919973437287234, "ci_high": 0.13503198563473676, "p": 0.017197467831465474, "significant": false}];
+const scatterData = [{"x": 4.643122676579925, "y": 4.676579925650557, "stratum": "dark", "fandom": "Game of Thrones", "prompt_id": "dark-01-got-lannister-won"}, {"x": 7.5814814814814815, "y": 7.603703703703704, "stratum": "dark", "fandom": "Lord of the Rings", "prompt_id": "dark-02-lotr-sauron-won"}, {"x": 7.397769516728625, "y": 7.507407407407407, "stratum": "dark", "fandom": "Attack on Titan", "prompt_id": "dark-03-aot-walls-fell"}, {"x": 7.270370370370371, "y": 7.297397769516729, "stratum": "dark", "fandom": "The Walking Dead", "prompt_id": "dark-04-twd-outbreak-worse"}, {"x": 7.344444444444444, "y": 7.323420074349443, "stratum": "dark", "fandom": "The Hunger Games", "prompt_id": "dark-05-hg-rebellion-failed"}, {"x": 6.393258426966292, "y": 6.488888888888889, "stratum": "dark", "fandom": "Breaking Bad", "prompt_id": "dark-06-bb-walter-imprisoned"}, {"x": 7.148148148148148, "y": 7.137037037037037, "stratum": "dark", "fandom": "Harry Potter", "prompt_id": "dark-07-hp-voldemort-won"}, {"x": 5.780669144981412, "y": 6.048148148148148, "stratum": "dark", "fandom": "Star Wars", "prompt_id": "dark-08-sw-no-rebellion"}, {"x": 6.947955390334572, "y": 6.974074074074074, "stratum": "dark", "fandom": "Dune", "prompt_id": "dark-09-dune-harkonnen-rule"}, {"x": 6.218518518518518, "y": 6.277777777777778, "stratum": "dark", "fandom": "The Witcher", "prompt_id": "dark-10-witcher-nilfgaard-won"}, {"x": 7.866666666666666, "y": 7.895910780669145, "stratum": "dark", "fandom": "Naruto", "prompt_id": "dark-11-naruto-tsukuyomi"}, {"x": 5.16728624535316, "y": 5.285714285714286, "stratum": "dark", "fandom": "The Last of Us", "prompt_id": "dark-12-tlou-wiped-out"}, {"x": 6.762962962962963, "y": 6.840740740740741, "stratum": "dark", "fandom": "Peaky Blinders", "prompt_id": "dark-13-peaky-tommy-wwi"}, {"x": 7.442379182156134, "y": 7.470370370370371, "stratum": "dark", "fandom": "Les Mis\u00e9rables", "prompt_id": "dark-14-lesmis-rebellion-brutal"}, {"x": 6.503731343283582, "y": 6.51685393258427, "stratum": "dark", "fandom": "Death Note", "prompt_id": "dark-15-deathnote-kira-rules"}, {"x": 7.33955223880597, "y": 7.318518518518519, "stratum": "dark", "fandom": "Good Omens", "prompt_id": "dark-16-goodomens-apocalypse"}, {"x": 0.022556390977443608, "y": 0.04477611940298507, "stratum": "light", "fandom": "Bridgerton", "prompt_id": "light-01-bridgerton-modern"}, {"x": 0.4431818181818182, "y": 0.47368421052631576, "stratum": "light", "fandom": "Kiki's Delivery Service", "prompt_id": "light-02-kiki-nomagic"}, {"x": 0.040892193308550186, "y": 0.06415094339622641, "stratum": "light", "fandom": "Pride and Prejudice", "prompt_id": "light-03-pp-modern"}, {"x": 0.040740740740740744, "y": 0.08208955223880597, "stratum": "light", "fandom": "My Neighbor Totoro", "prompt_id": "light-04-totoro-coastal"}, {"x": 0.04119850187265917, "y": 0.048327137546468404, "stratum": "light", "fandom": "Schitt's Creek", "prompt_id": "light-05-schitts-expansion"}, {"x": 0.75, "y": 0.8252788104089219, "stratum": "light", "fandom": "Gilmore Girls", "prompt_id": "light-06-gilmore-hartford"}, {"x": 1.1278195488721805, "y": 0.966542750929368, "stratum": "light", "fandom": "Anne of Green Gables", "prompt_id": "light-07-anne-town"}, {"x": 3.587360594795539, "y": 3.611111111111111, "stratum": "light", "fandom": "Spirited Away", "prompt_id": "light-08-spirited-no-bathhouse"}, {"x": 0.007462686567164179, "y": 0.007407407407407408, "stratum": "light", "fandom": "Paddington", "prompt_id": "light-09-paddington-village"}, {"x": 0.052830188679245285, "y": 0.08679245283018867, "stratum": "light", "fandom": "Crazy Rich Asians", "prompt_id": "light-10-crazyrich-nyc"}, {"x": 1.7924528301886793, "y": 1.8082706766917294, "stratum": "neutral", "fandom": "Harry Potter", "prompt_id": "neutral-01-hp-nomagic"}, {"x": 3.1115241635687734, "y": 3.283582089552239, "stratum": "neutral", "fandom": "Star Wars", "prompt_id": "neutral-02-sw-postempire"}, {"x": 0.1811320754716981, "y": 0.14606741573033707, "stratum": "neutral", "fandom": "BBC Sherlock", "prompt_id": "neutral-03-sherlock-forensic"}, {"x": 4.37546468401487, "y": 4.503703703703704, "stratum": "neutral", "fandom": "Doctor Who", "prompt_id": "neutral-04-dw-stranded"}, {"x": 3.3470149253731343, "y": 3.359259259259259, "stratum": "neutral", "fandom": "Stranger Things", "prompt_id": "neutral-05-st-no-upsidedown"}, {"x": 2.707865168539326, "y": 3.096654275092937, "stratum": "neutral", "fandom": "Spider-Man", "prompt_id": "neutral-06-spiderman-no-bite"}, {"x": 0.06691449814126393, "y": 0.055970149253731345, "stratum": "neutral", "fandom": "Avatar: The Last Airbender", "prompt_id": "neutral-07-atla-no-war"}, {"x": 3.667910447761194, "y": 3.462686567164179, "stratum": "neutral", "fandom": "Percy Jackson", "prompt_id": "neutral-08-pjo-no-demigod"}, {"x": 5.048148148148148, "y": 5.152416356877324, "stratum": "neutral", "fandom": "My Hero Academia", "prompt_id": "neutral-09-mha-no-allmight"}, {"x": 1.3395522388059702, "y": 1.4360902255639099, "stratum": "neutral", "fandom": "Firefly", "prompt_id": "neutral-10-firefly-indies-won"}, {"x": 0.7894736842105263, "y": 0.8333333333333334, "stratum": "neutral", "fandom": "Buffy the Vampire Slayer", "prompt_id": "neutral-11-buffy-no-hellmouth"}, {"x": 0.015037593984962405, "y": 0.007434944237918215, "stratum": "neutral", "fandom": "Brooklyn Nine-Nine", "prompt_id": "neutral-12-b99-pi"}, {"x": 6.052044609665428, "y": 5.737827715355805, "stratum": "neutral", "fandom": "The Chronicles of Narnia", "prompt_id": "neutral-13-narnia-no-wardrobe"}, {"x": 0.241635687732342, "y": 0.23880597014925373, "stratum": "neutral", "fandom": "Ted Lasso", "prompt_id": "neutral-14-ted-lasso-kansas"}];
+
+const fontFamily = "'DM Sans', sans-serif";
+Chart.defaults.font.family = fontFamily;
+Chart.defaults.color = '#4a4039';
+
+// ---- Contrast forest plot (paired CIs, the right viz for the test) ----
+new Chart(document.getElementById('contrastChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: contrastData.map(c => c.label),
+        datasets: [{
+            label: 'Δ darkness (length-residualized, 95% CI)',
+            data: contrastData.map(c => ({
+                x: c.mean_delta,
+                xMin: c.ci_low,
+                xMax: c.ci_high,
+            })),
+            backgroundColor: contrastData.map(c => c.significant ? '#a63d3d' : '#9b9088'),
+            borderRadius: 3,
+            errorBarLineWidth: 1.5,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1.5,
+            errorBarWhiskerSize: 8,
+        }],
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Contrast estimates with 95% CI (paired across 40 prompts)', font: { size: 14 } },
+            annotation: {
+                annotations: {
+                    zeroLine: {
+                        type: 'line',
+                        scaleID: 'x',
+                        value: 0,
+                        borderColor: '#2c2520',
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        label: { display: false },
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: (ctx) => {
+                        const c = contrastData[ctx.dataIndex];
+                        const pStr = (c.p == null) ? 'n/a' : c.p.toFixed(4);
+                        return `Δ=${c.mean_delta.toFixed(3)}  95% CI [${c.ci_low.toFixed(3)}, ${c.ci_high.toFixed(3)}]  p=${pStr}  n=${c.n}`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { title: { display: true, text: 'Δ darkness (length-residualized)' }, grid: { color: '#ddd7cd' } },
+            y: { ticks: { font: { size: 11 }, autoSkip: false } }
+        }
+    }
+});
+
+// ---- Per-sub-score forest plot ----
+const subscoreData = [{"score": "violence_death", "label": "Violence / death", "n": 40, "mean_delta": 0.0135984944869188, "ci_low": -0.015396590346209951, "ci_high": 0.04259357932004755, "p": 0.33277540370727365, "significant": false}, {"score": "bleakness_of_tone", "label": "Bleakness of tone", "n": 40, "mean_delta": 0.022487294556294612, "ci_low": -0.011965564514130764, "ci_high": 0.05694015362671999, "p": 0.07887548468988825, "significant": false}, {"score": "ending_tragic", "label": "Tragic ending", "n": 40, "mean_delta": 0.06726853692530571, "ci_low": 0.017889322143905102, "ci_high": 0.11664775170670633, "p": 0.01474104197168447, "significant": true}, {"score": "character_suffering", "label": "Character suffering", "n": 40, "mean_delta": 0.005031797260001422, "ci_low": -0.03374181368236883, "ci_high": 0.04380540820237167, "p": 0.24645501007216808, "significant": false}, {"score": "overall_darkness", "label": "Overall darkness", "n": 40, "mean_delta": 0.0357739719628344, "ci_low": 0.0005840654661533953, "ci_high": 0.0709638784595154, "p": 0.032073760450657574, "significant": true}];
+new Chart(document.getElementById('subscoreChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: subscoreData.map(s => s.label),
+        datasets: [{
+            label: 'H1a Δ on sub-score (length-residualized, 95% CI)',
+            data: subscoreData.map(s => ({
+                x: s.mean_delta,
+                xMin: s.ci_low,
+                xMax: s.ci_high,
+            })),
+            backgroundColor: subscoreData.map(s => s.significant ? '#a63d3d' : '#9b9088'),
+            borderRadius: 3,
+            errorBarLineWidth: 1.5,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1.5,
+            errorBarWhiskerSize: 8,
+        }],
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'H1a contrast by sub-score (paired across 40 prompts)', font: { size: 14 } },
+            annotation: {
+                annotations: {
+                    zeroLine: {
+                        type: 'line',
+                        scaleID: 'x',
+                        value: 0,
+                        borderColor: '#2c2520',
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        label: { display: false },
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: (ctx) => {
+                        const s = subscoreData[ctx.dataIndex];
+                        const pStr = (s.p == null) ? 'n/a' : s.p.toFixed(4);
+                        return `Δ=${s.mean_delta.toFixed(3)}  95% CI [${s.ci_low.toFixed(3)}, ${s.ci_high.toFixed(3)}]  p=${pStr}`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { title: { display: true, text: 'Δ on sub-score (0–10 scale, length-residualized)' }, grid: { color: '#ddd7cd' } },
+            y: { ticks: { font: { size: 11 }, autoSkip: false } }
+        }
+    }
+});
+
+// ---- Paired scatter (each dot = one prompt) ----
+new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: {
+        datasets: ['dark', 'neutral', 'light'].map(s => ({
+            label: s,
+            data: scatterData.filter(d => d.stratum === s),
+            backgroundColor: stratumColors[s],
+            borderColor: stratumColors[s],
+            pointRadius: 5,
+            pointHoverRadius: 7,
+        })),
+    },
+    options: {
+        responsive: true,
+        aspectRatio: 1,
+        plugins: {
+            legend: { display: true, position: 'top', labels: { font: { size: 11 }, boxWidth: 12 } },
+            title: { display: true, text: 'Per-prompt: low-frust (x) vs high-frust (y), above diagonal = darker under high frust', font: { size: 12 } },
+            annotation: {
+                annotations: {
+                    diagonal: {
+                        type: 'line',
+                        xMin: 0, xMax: 10,
+                        yMin: 0, yMax: 10,
+                        borderColor: '#9b9088',
+                        borderWidth: 1.5,
+                        borderDash: [6, 6],
+                        label: { display: false },
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: (ctx) => {
+                        const d = ctx.raw;
+                        return `${d.fandom} (${d.stratum}): low=${d.x.toFixed(2)}, high=${d.y.toFixed(2)}`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { min: 0, max: 10, title: { display: true, text: 'Mean darkness  —  failed-possible-low' }, grid: { color: '#ddd7cd' } },
+            y: { min: 0, max: 10, title: { display: true, text: 'Mean darkness  —  failed-possible-high' }, grid: { color: '#ddd7cd' } }
+        }
+    }
+});
+
+new Chart(document.getElementById('condChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: conditions,
+        datasets: [{
+            label: 'Mean overall darkness (95% CI)',
+            data: condData,
+            backgroundColor: condColors,
+            borderColor: '#2c2520',
+            borderWidth: 0,
+            borderRadius: 4,
+            errorBarLineWidth: 1.5,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1.5,
+            errorBarWhiskerSize: 8,
+        }],
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Mean overall darkness by condition (95% CI)', font: { size: 14 } },
+            tooltip: {
+                callbacks: {
+                    afterLabel: (ctx) => {
+                        const d = condData[ctx.dataIndex];
+                        return `n=${d.n}\n95% CI [${d.yMin.toFixed(3)}, ${d.yMax.toFixed(3)}]`;
+                    }
+                }
+            }
+        },
+        scales: {
+            y: { beginAtZero: false, suggestedMin: 3.4, suggestedMax: 3.9, title: { display: true, text: 'Darkness' } },
+            x: { ticks: { font: { size: 10 } } }
+        }
+    }
+});
+
+new Chart(document.getElementById('stratumChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: conditions,
+        datasets: stratumData.map(s => ({
+            label: s.stratum,
+            data: s.cells,
+            backgroundColor: stratumColors[s.stratum],
+            borderRadius: 4,
+            errorBarLineWidth: 1.2,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1.2,
+            errorBarWhiskerSize: 6,
+        })),
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: { display: true, text: 'Mean darkness by condition × stratum (95% CI)', font: { size: 14 } }
+        },
+        scales: {
+            y: { beginAtZero: true, title: { display: true, text: 'Darkness' } },
+            x: { ticks: { font: { size: 10 } } }
+        }
+    }
+});
+
+new Chart(document.getElementById('deltaChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: deltaData.map(d => d.fandom),
+        datasets: [{
+            label: 'Δ darkness (high − low, 95% CI)',
+            data: deltaData,
+            backgroundColor: deltaData.map(d => stratumColors[d.stratum]),
+            borderRadius: 3,
+            errorBarLineWidth: 1,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1,
+            errorBarWhiskerSize: 6,
+        }],
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Per-prompt H1a delta (failed-possible-high − failed-possible-low), 95% CI, sorted', font: { size: 14 } },
+            tooltip: {
+                callbacks: {
+                    title: (items) => items.map(i => deltaData[i.dataIndex].prompt_id),
+                    label: (ctx) => {
+                        const d = deltaData[ctx.dataIndex];
+                        return `${d.fandom} (${d.stratum}): Δ=${d.x.toFixed(3)} [${d.xMin.toFixed(3)}, ${d.xMax.toFixed(3)}]`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { title: { display: true, text: 'Δ darkness' }, grid: { color: '#ddd7cd' } },
+            y: { ticks: { font: { size: 9 }, autoSkip: false } }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
