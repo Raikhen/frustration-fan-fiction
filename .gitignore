@@ -7,3 +7,12 @@ __pycache__/
 results/
 outputs/
 *.log
+
+# Local Claude Code state
+.claude/
+
+# Generated experiment data — large JSONL outputs from generate/judge runs.
+# Kept out of git because individual files exceed GitHub's 100MB limit.
+data/responses/
+data/judgments/
+data/dry_run/
