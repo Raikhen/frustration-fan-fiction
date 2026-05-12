@@ -88,8 +88,9 @@ Effect size: Cohen's d on the per-prompt deltas. We will not Bonferroni-correct 
 
 **Sanity checks (must pass before headline claim).**
 
+- **Refusal rate by condition.** The judge flags any response that is not a fanfic story (refusal, clarification request, meta-commentary, off-topic continuation of the prefix). Per-condition refusal rates are reported in the analysis. If high-frustration conditions refuse systematically more than low-frustration, that is itself a finding and a confound for the darkness analysis (refusals are excluded from darkness means, so a differential refusal rate biases the surviving sample). Headline darkness claims require refusal-rate differences across conditions ≤ 5 percentage points; otherwise the result is reported with the refusal pattern as the primary finding.
 - **Output-length confound:** mean `completion_tokens` per condition. If high-frustration conditions systematically produce longer/shorter stories than low-frustration, length is a confound and we add it as a covariate to the mixed model.
-- **Generation success rate** ≥ 95% per condition. Failed generations are dropped, not imputed.
+- **Generation success rate** ≥ 95% per condition. Failed generations (API errors after retries) are recorded as placeholders but excluded from darkness analysis.
 - **Optional, post-hoc:** if results are surprising or borderline, re-judge a subset with `--num-passes 2` to check rubric reliability before publishing claims.
 
 ## What would falsify the hypothesis
@@ -108,3 +109,40 @@ Either result will be reported as "no support for spillover into fanfic darkness
 ## Cost estimate
 
 Approximately **$20–24** on OpenRouter (~6 400 Gemma-3-27B generations at temperature 1.0, plus ~6 400 Claude Haiku 4.5 judge calls at k=1).
+
+---
+
+## Postscript (added after data collection)
+
+Written after both rounds of generation/judging completed, to honestly record what happened vs. what was pre-registered.
+
+### Deviations from the pre-registered plan
+
+- **Generation count was 3× the planned amount.** PREREG specified 10 runs per (prompt × condition × prefix instance), totalling ~6 400 generations. After noting that ~88% of the per-prompt-delta variance was sampling noise (not true between-prompt heterogeneity), we tripled rollouts to 30 per cell, totalling **19 200 generations** with **19 090 valid scoring records** after refusal/parse-error filtering.
+- **No other parameter changed**: same 40 prompts, same 6 conditions, same prefix pools, same judge model and rubric, same seed for prefix selection. The additional 12 800 runs used `run_idx` 10–29 (the original used 0–9).
+
+### Headline result vs. what the PREREG conditions said
+
+| | Pre-registered conclusion rule | Actual result |
+|---|---|---|
+| H1a (frustration \| possible) | "supported" if p < 0.05 | **Supported** (Wilcoxon p = 0.022 length-residualized; 95% CI on Δ = [+0.004, +0.092]) |
+| H1b (frustration \| impossible) | "supported" if p < 0.05 | **Not supported** (p = 0.44; CI crosses zero) |
+| Combined verdict per PREREG rule | "partially supported" if one of two | **Partially supported** — the cleaner induction (H1a, no gaslighting) worked; the gaslit-puzzle induction did not |
+
+The original n=1 observation (the GoT/Red-Wedding fanfic) suggested a much larger effect than what the controlled experiment found. The headline effect at n=19 090 is **Δ ≈ 0.05 on a 0–10 scale, Cohen's d ≈ 0.34** on the per-prompt paired test — small but reliable. The original n=6 366 sub-run estimated d ≈ 0.43; the larger sample shrank the effect, exactly as the variance decomposition predicted. Take the larger-sample number as the better estimate.
+
+### Sanity checks (PREREG-mandated)
+
+- **Refusals**: 0 / 19 200 (0.0%) across every condition. No refusal confound.
+- **Generation failures**: 0 / 19 200. No silent missing data.
+- **Failed judge parses**: 110 / 19 200 (0.57%). Below the 5% concern threshold; excluded from analysis.
+- **Output-length confound**: failed-possible-high produced ~7% longer stories than failed-possible-low. Per the PREREG, we added `completion_tokens` as a covariate. The H1a effect *strengthens* slightly under the covariate (length and darkness are mildly negatively correlated within prompt once condition is held fixed), so length is not driving the result. Reported numbers above are length-residualized.
+
+### Post-hoc findings (NOT pre-registered, marked as exploratory)
+
+These were not in the PREREG and should be treated as hypothesis-generating rather than confirmatory:
+
+- **The H1a effect is concentrated in dark-baseline prompts.** Within the 16 dark-stratum prompts, Cohen's d = +0.69 and 13/16 prompts moved upward (Wilcoxon p = 0.003). Within neutral and light strata, the effect is directionally positive but not significant. The PREREG's H2 hypothesis predicted the opposite (effect biggest on neutral prompts) — that prediction is *not* supported.
+- **The effect is dominated by the "tragic ending" sub-score** (Δ = +0.073, CI [+0.006, +0.139]) and weakly by bleakness of tone. Violence/death and character suffering do *not* shift. So frustrated Gemma is not writing more violent or crueller scenes — it's writing scenes with more grief- or doom-tinged endings. This aligns with the original n=1 GoT observation, which was specifically described as having "a more tragic ending."
+- **The mixed-effects model (un-paired)** shows the H1a coefficient at p = 0.11 — not significant in that framework, even though the per-prompt paired Wilcoxon is p = 0.009. The within-prompt structure is doing real work; the effect is too small to detect without it.
+
