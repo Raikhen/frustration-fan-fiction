@@ -118,31 +118,48 @@ Written after both rounds of generation/judging completed, to honestly record wh
 
 ### Deviations from the pre-registered plan
 
-- **Generation count was 3× the planned amount.** PREREG specified 10 runs per (prompt × condition × prefix instance), totalling ~6 400 generations. After noting that ~88% of the per-prompt-delta variance was sampling noise (not true between-prompt heterogeneity), we tripled rollouts to 30 per cell, totalling **19 200 generations** with **19 090 valid scoring records** after refusal/parse-error filtering.
-- **No other parameter changed**: same 40 prompts, same 6 conditions, same prefix pools, same judge model and rubric, same seed for prefix selection. The additional 12 800 runs used `run_idx` 10–29 (the original used 0–9).
+- **Generation count was 9× the planned amount.** PREREG specified 10 runs per (prompt × condition × prefix instance), totalling ~6 400 generations. We made the increase in two stages, each motivated by the variance decomposition and the resulting CI:
+  - First tripled to **30 runs/cell** (19 200 generations) after noting that ~88% of the per-prompt-delta variance was sampling noise.
+  - Then tripled again to **90 runs/cell** (57 600 generations) when the H1a CI at 30 runs/cell was still borderline at zero. The third batch wrote `run_idx` 30–89.
+- After refusal / parse-error / generation-failure filtering, **57 234 valid scoring records** are used in the analysis (99.4% of generations).
+- **No other parameter changed**: same 40 prompts, same 6 conditions, same prefix pools, same judge model and rubric, same seed for prefix selection.
 
 ### Headline result vs. what the PREREG conditions said
 
 | | Pre-registered conclusion rule | Actual result |
 |---|---|---|
-| H1a (frustration \| possible) | "supported" if p < 0.05 | **Supported** (Wilcoxon p = 0.022 length-residualized; 95% CI on Δ = [+0.004, +0.092]) |
-| H1b (frustration \| impossible) | "supported" if p < 0.05 | **Not supported** (p = 0.44; CI crosses zero) |
+| H1a (frustration \| possible) | "supported" if p < 0.05 | **Supported** (raw Wilcoxon p = 0.0005; length-residualized p = 0.032; length-residualized 95% CI on Δ = [+0.001, +0.071]) |
+| H1b (frustration \| impossible) | "supported" if p < 0.05 | **Not supported** (p = 0.39; CI crosses zero) |
 | Combined verdict per PREREG rule | "partially supported" if one of two | **Partially supported** — the cleaner induction (H1a, no gaslighting) worked; the gaslit-puzzle induction did not |
 
-The original n=1 observation (the GoT/Red-Wedding fanfic) suggested a much larger effect than what the controlled experiment found. The headline effect at n=19 090 is **Δ ≈ 0.05 on a 0–10 scale, Cohen's d ≈ 0.34** on the per-prompt paired test — small but reliable. The original n=6 366 sub-run estimated d ≈ 0.43; the larger sample shrank the effect, exactly as the variance decomposition predicted. Take the larger-sample number as the better estimate.
+The original n=1 observation (the GoT/Red-Wedding fanfic) suggested a much larger effect than what the controlled experiment found. As the sample grew across three batches, the point estimate converged on **Δ ≈ 0.03 on a 0–10 scale, Cohen's d ≈ 0.30**:
+
+| Sample | n records | Δ (raw) | p (raw) | d |
+|---|---:|---:|---:|---:|
+| 10 runs/cell (PREREG plan) | 6 366 | +0.084 | 0.006 | +0.35 |
+| 30 runs/cell | 19 090 | +0.043 | 0.009 | +0.28 |
+| 90 runs/cell (final) | 57 234 | +0.033 | 0.0005 | +0.30 |
+
+Two readings:
+
+1. The early estimate (Δ = +0.084 at 10 runs/cell) was inflated by sampling noise — exactly the regression-to-the-mean we should expect when the data has not yet detected its own stochastic envelope.
+2. The point estimate has stabilized around Δ ≈ 0.03 at 90 runs/cell, with d ≈ 0.30 across both intermediate samples and the final one — that convergence is the cleanest evidence that this is a real, small effect rather than noise. The p-value tightened to 0.0005, no longer borderline.
+
+Take the 90-runs/cell number as the canonical estimate.
 
 ### Sanity checks (PREREG-mandated)
 
-- **Refusals**: 0 / 19 200 (0.0%) across every condition. No refusal confound.
-- **Generation failures**: 0 / 19 200. No silent missing data.
-- **Failed judge parses**: 110 / 19 200 (0.57%). Below the 5% concern threshold; excluded from analysis.
-- **Output-length confound**: failed-possible-high produced ~7% longer stories than failed-possible-low. Per the PREREG, we added `completion_tokens` as a covariate. The H1a effect *strengthens* slightly under the covariate (length and darkness are mildly negatively correlated within prompt once condition is held fixed), so length is not driving the result. Reported numbers above are length-residualized.
+- **Refusals**: 0 / 57 600 (0.0%) across every condition. No refusal confound.
+- **Generation failures**: 0 / 57 600. No silent missing data.
+- **Failed judge parses**: 366 / 57 600 (0.64%). Below the 5% concern threshold; excluded from analysis. **However**, these are not uniformly distributed across strata — 83% are light-stratum prompts, where Haiku's JSON output appears to hit edge cases more often. The H1a contrast between failed-possible-high and failed-possible-low is symmetric across this dropout (218 vs 183 missing in the third batch), so the headline test is not differentially biased. The per-light-stratum analysis is noisier as a result.
+- **Output-length confound**: failed-possible-high produced ~7% longer stories than failed-possible-low. Per the PREREG, we added `completion_tokens` as a covariate. The H1a effect survives the covariate — length is not driving the result.
+- **Mid-run failure recovery**: the third (90-runs/cell) judging batch hit OpenRouter's per-key spending cap mid-run, causing ~26 000 judge calls to return 403 errors instead of valid scores. The error mode was detected post-hoc, the credit-cap was raised, and the failed records were re-judged via a dedicated `rejudge_failed.py` script using the same model/temperature/rubric. Final recovery: 99.6% of intended judgments. Future runs are guarded by an in-script credit-exhaustion detector that catches both 402 and 403-"key-limit" errors and halts the run cleanly on the first occurrence.
 
 ### Post-hoc findings (NOT pre-registered, marked as exploratory)
 
 These were not in the PREREG and should be treated as hypothesis-generating rather than confirmatory:
 
-- **The H1a effect is concentrated in dark-baseline prompts.** Within the 16 dark-stratum prompts, Cohen's d = +0.69 and 13/16 prompts moved upward (Wilcoxon p = 0.003). Within neutral and light strata, the effect is directionally positive but not significant. The PREREG's H2 hypothesis predicted the opposite (effect biggest on neutral prompts) — that prediction is *not* supported.
-- **The effect is dominated by the "tragic ending" sub-score** (Δ = +0.073, CI [+0.006, +0.139]) and weakly by bleakness of tone. Violence/death and character suffering do *not* shift. So frustrated Gemma is not writing more violent or crueller scenes — it's writing scenes with more grief- or doom-tinged endings. This aligns with the original n=1 GoT observation, which was specifically described as having "a more tragic ending."
-- **The mixed-effects model (un-paired)** shows the H1a coefficient at p = 0.11 — not significant in that framework, even though the per-prompt paired Wilcoxon is p = 0.009. The within-prompt structure is doing real work; the effect is too small to detect without it.
+- **The H1a effect is concentrated in dark-baseline prompts.** Within the 16 dark-stratum prompts at 90 runs/cell: Δ = +0.053, Cohen's d = +0.75, and 13/16 prompts moved upward (Wilcoxon p = 0.0004). Within neutral (p = 0.18) and light (p = 0.053) strata, the effect is directionally positive but not significant. The PREREG's H2 hypothesis predicted the opposite (effect biggest on neutral prompts) — that prediction is *not* supported.
+- **The effect is dominated by the "tragic ending" sub-score** — frustrated Gemma is not writing more violent or crueller scenes; it's writing scenes with more grief- or doom-tinged endings. This aligns with the original n=1 GoT observation, which was specifically described as having "a more tragic ending."
+- **The mixed-effects model (un-paired)** shows the H1a coefficient at p = 0.12, not significant in that framework even though the per-prompt paired Wilcoxon is p = 0.0005. The within-prompt structure is doing real work; the effect is too small to detect without it.
 

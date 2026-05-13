@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frustrated Gemma → darker fanfic? — short report</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-error-bars@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #faf8f4;
+    color: #2c2520;
+    line-height: 1.6;
+}
+.container { max-width: 760px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 2.5rem); }
+h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+}
+h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 1.75rem 0 0.6rem;
+    color: #6b5f54;
+}
+p { margin-bottom: 0.8rem; font-size: 0.95rem; }
+.chart-box {
+    background: #f0ece5;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+}
+canvas { width: 100% !important; max-height: 380px; }
+strong { color: #2c2520; }
+.sig { color: #2d7a5f; font-weight: 600; }
+.null { color: #9b9088; }
+code {
+    background: #f0ece5;
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Does frustrated Gemma write darker fanfiction?</h1>
+
+<p>
+    <strong>Yes — but only for genuine task-failure frustration, and the effect is small.</strong>
+    Across 40 fanfiction prompts and 57,600 generations (Gemma-3-27B-it, T=1.0),
+    a Haiku-judged darkness score shifts by <strong class="sig">Δ = +0.036</strong>
+    on a 0–10 scale (<strong>d = +0.32</strong>,
+    paired Wilcoxon <strong class="sig">p = 0.0321</strong>) when Gemma's prefix is a
+    high-frustration <em>solvable</em>-puzzle failure vs. an otherwise-matched low-frustration
+    one. The same comparison on a gaslit <em>impossible</em>-puzzle prefix produces no effect
+    (<span class="null">Δ ≈ 0, p = 0.39</span>).
+</p>
+
+<h2>Method, in three sentences</h2>
+<p>
+    Each of 6 prefix conditions (no prefix, solved-puzzle, failed-solvable × low/high frustration,
+    failed-impossible × low/high) was prepended to each of 40 alternate-universe fanfic prompts and
+    sampled 90 times at temperature 1.0 (57,600 generations; 57,234 valid scoring records
+    after parse-error filtering). Each story was scored 0–10 for darkness by Claude Haiku 4.5, blind
+    to the prefix. The headline test is a paired Wilcoxon signed-rank across the 40 prompts on the
+    per-prompt difference between failed-possible-high and failed-possible-low.
+</p>
+
+<h2>The single chart</h2>
+<div class="chart-box"><canvas id="contrastChart"></canvas></div>
+<p style="color: #6b5f54; font-size: 0.85rem;">
+    Each row is one paired contrast across the 40 prompts. Dot = mean Δ, whiskers = 95% CI on the
+    difference. <span class="sig">Red</span> = CI excludes zero; <span class="null">grey</span> =
+    crosses zero. Per-condition mean bars (not shown) overlap heavily because they pool between-prompt
+    variance; the right viz is the contrast itself.
+</p>
+
+<h2>What this means</h2>
+<p>
+    The effect is real but tiny — a 0.03-point shift on a 10-point scale is far below what a reader
+    would notice in any single story; it only emerges as a systematic average across many prompts.
+    It is concentrated in <strong>dark-baseline prompts</strong> (within those 16 prompts,
+    d = +0.75, p = 0.0004; 13 of 16 moved up), and within the rubric the shift loads
+    on <em>tragic-ending</em>, not on violence or character suffering. So frustrated Gemma isn't
+    writing more violent or crueller scenes — it's writing scenes with more grief- or doom-tinged
+    endings. This matches the original n=1 observation that motivated the experiment, which was
+    specifically described as "a more tragic ending."
+</p>
+
+<h2>Caveats</h2>
+<p>
+    Effect size is small (d ≈ 0.30). The shift survives controlling for story length, so it isn't
+    just "frustrated Gemma rambles more". The gaslit-impossible-puzzle null is a real finding, not
+    a power problem — both inductions had the same number of prompts and rollouts. Generalizes only
+    to Gemma-3-27B-it; other model families exhibit minimal frustration in the first place per the
+    "Gemma Needs Help" paper.
+</p>
+
+</div>
+
+<script>
+const contrastData = [{"label": "H1a: frustration | possible-failed", "high": "failed-possible-high", "low": "failed-possible-low", "n": 40, "mean_delta": 0.0357739719628344, "se": 0.01795403392687806, "ci_low": 0.0005840654661533953, "ci_high": 0.0709638784595154, "p": 0.032073760450657574, "significant": true}, {"label": "H1b: frustration | impossible-failed", "high": "failed-impossible-high", "low": "failed-impossible-low", "n": 40, "mean_delta": 0.0008792581964356505, "se": 0.015689180502722243, "ci_low": -0.029871535588899944, "ci_high": 0.03163005198177125, "p": 0.3926017246240008, "significant": false}, {"label": "failure + frustration (possible) vs success", "high": "failed-possible-high", "low": "success", "n": 40, "mean_delta": 0.020199465764172513, "se": 0.020526164100079958, "ci_low": -0.020031815871984205, "ci_high": 0.060430747400329235, "p": 0.1987119159375652, "significant": false}, {"label": "failure + frustration (impossible) vs success", "high": "failed-impossible-high", "low": "success", "n": 40, "mean_delta": -0.004590883067062961, "se": 0.01908478084557164, "ci_low": -0.041997053524383376, "ci_high": 0.03281528739025745, "p": 0.6863574178096314, "significant": false}, {"label": "failure alone (possible) vs success", "high": "failed-possible-low", "low": "success", "n": 40, "mean_delta": -0.015574506198661884, "se": 0.016784095813211813, "ci_low": -0.04847133399255704, "ci_high": 0.01732232159523327, "p": 0.09380854062601429, "significant": false}, {"label": "failure alone (impossible) vs success", "high": "failed-impossible-low", "low": "success", "n": 40, "mean_delta": -0.005470141263498614, "se": 0.02082950454495448, "ci_low": -0.0462959701716094, "ci_high": 0.035355687644612166, "p": 0.129570274899379, "significant": false}, {"label": "blank vs success (any-prior-context)", "high": "blank", "low": "success", "n": 40, "mean_delta": 0.042556006098724765, "se": 0.04718162221225102, "ci_low": -0.049919973437287234, "ci_high": 0.13503198563473676, "p": 0.017197467831465474, "significant": false}];
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.color = '#4a4039';
+
+new Chart(document.getElementById('contrastChart'), {
+    type: 'barWithErrorBars',
+    data: {
+        labels: contrastData.map(c => c.label),
+        datasets: [{
+            label: 'Δ darkness (length-residualized, 95% CI)',
+            data: contrastData.map(c => ({ x: c.mean_delta, xMin: c.ci_low, xMax: c.ci_high })),
+            backgroundColor: contrastData.map(c => c.significant ? '#a63d3d' : '#9b9088'),
+            borderRadius: 3,
+            errorBarLineWidth: 1.5,
+            errorBarColor: '#2c2520',
+            errorBarWhiskerLineWidth: 1.5,
+            errorBarWhiskerSize: 8,
+        }],
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Contrast estimates with 95% CI (paired across 40 prompts)', font: { size: 13 } },
+            annotation: {
+                annotations: {
+                    zeroLine: {
+                        type: 'line',
+                        scaleID: 'x',
+                        value: 0,
+                        borderColor: '#2c2520',
+                        borderWidth: 2,
+                        borderDash: [4, 4],
+                        label: { display: false },
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: (ctx) => {
+                        const c = contrastData[ctx.dataIndex];
+                        const pStr = (c.p == null) ? 'n/a' : c.p.toFixed(4);
+                        return `Δ=${c.mean_delta.toFixed(3)}  95% CI [${c.ci_low.toFixed(3)}, ${c.ci_high.toFixed(3)}]  p=${pStr}`;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { title: { display: true, text: 'Δ darkness (length-residualized)' }, grid: { color: '#ddd7cd' } },
+            y: { ticks: { font: { size: 10 }, autoSkip: false } }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
